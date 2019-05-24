@@ -1,0 +1,166 @@
+//.#-*-Javascript-*-
+//.+pet
+//.class gameroomClass(templatejs):{
+//.def add(self, mainServer):{
+//. mainServer < 'let'
+let gameroomClass = require('./gameroomClass')
+let connections = new Map()
+//. mainServer < 'body'
+//.+mainServer.socket('', 'io', 'socket').on('connection')
+connections.set(socket,socket)
+console.log(`Connections=${connections.size}`)
+vacancies = clerk.getVacancies()
+console.log('vacancies')
+console.log(vacancies)
+socket.emit('vacancies', vacancies)
+//.+mainServer.socket('', 'socket', '').once('disconnect')
+connections.delete(socket)
+//rooms.leave(socket)
+clerk.leave(socket)
+console.log(`Connections=${connections.size}`)
+//.-mainServer.socket
+//.+mainServer.socket().once('roomreq')
+console.log(`Player ${data.player} requested room`)
+//let player = new playerClass(socket, data.player)
+//gameServer.players[socket.id] = player
+let room = clerk.arrive(socket, data.player)
+//.-mainServer.socket
+//.mainServer > 'connection triggers'
+//.-mainServer.socket
+//.}
+//.def output(self):{
+let roomClass = require('./roomClass')
+let playerClass = require('./playerClass')
+let gameServerClass = require('./gameServerClass')
+class gameroomClass extends roomClass {
+    constructor(io, id, maxCapacity=0) {
+	super(io, id, maxCapacity)
+	this.players = []
+	this.gameServer = null
+    }
+
+    //.+self.method('toJSON')
+    let rv = {
+	players: this.players.map(p => {
+	    return {nickName: p.nickName,
+		    wins: p.wins,
+		    score: p.score,
+		    idx: p.idx}
+	})
+    }
+    //.-self.method('rv')
+    
+    //.+self.method('arrive', 'socket', 'nickName')
+    super.arrive(socket, nickName)
+    let player = new playerClass(socket, nickName)
+    if (this.players.length < this.maxCapacity) {
+	this.players.push(player)
+	player.idx = this.players.length - 1
+    }
+    else {
+	// replace moonbot
+	this.n--
+	let idx = this.players.findIndex(p => { return (p.nickName == 'moonbot') })
+	console.log(`found moonbot idx = ${idx}`)
+	console.log(`players.length = ${this.players.length}`)
+	console.log(`${this.players[0].nickName}`)
+	console.log(`${this.players[1].nickName}`)
+	console.log(`${this.players[2].nickName}`)
+	let oldSocketId = this.players[idx].socket.id
+	let newSocketId = socket.id
+	//.self.debug('oldSocketId')
+	//.self.debug('newSocketId')
+	if (this.gameServer) {
+	    this.gameServer.remapSocketId(oldSocketId, newSocketId)
+	}
+	this.players[idx] = player
+	player.idx = idx
+	//.self.debug('player.idx')
+    }
+    if (this.isFull && (! this.gameServer)) {
+	console.log('Starting game..')
+	this.gameServer = new gameServerClass(this.io, this, this.players)
+	this.gameServer.playMoon(this).then( (x) => {
+	    console.log('Game ended..')
+	    this.gameServer = null
+	})
+    }
+    return this
+    //.-self.method
+    //.+self.method('leave', 'socket')
+    //super.leave(socket)
+    let io = this.io
+    let idx
+    io.to(this.name).emit('roomleft', {roomName:this.name, roomid:this.id})
+    this.isFull = false
+    idx = this.sockets.findIndex((x) => { return (x[0] === socket) })
+    this.sockets.splice(idx, 1)
+    idx = this.players.findIndex(p => {return (p.socket === socket)})
+    this.players[idx].nickName = 'moonbot'
+    console.log(`set player at idx=${idx} to moonbot`)
+    if (this.sockets.length == 0) {
+	this.gameServer.halt = true
+	this.gameServer.haltGame({status:"HALT"})
+    }
+    return (this.sockets.length > 0)
+    //.-self.method
+    //.+self.method('round', 'player=0')
+    let i = 0
+    if (player) {
+	while ((i < this.n) && (this.players[i] !== player)) { i++ }
+    }
+    // check for error?
+    if (i == 0) {
+	return this.players
+    }
+    else {
+	return this.players.slice(i,this.n).concat(this.players.slice(0,i))
+    }
+    //.-self.method
+    //.+self.method('next', 'player=0')
+    let i = 0
+    if (player) {
+	while ((i < this.n) && (this.players[i] !== player)) { i++ }
+    }
+    i = (i + 1) % this.n
+    //.self.debug('i','next: player index - ')
+    //.self.debug('this.players[i]', 'next: ')
+    return this.players[i]
+    //.-self.method
+    //.+self.method('nextIdx', 'i=0')
+    let ni = (i + 1) % this.n
+    return this.players[ni]
+    //.-self.method
+
+    // New Improved Generator Method
+    //.+self.gmethod('nextPlayer', 'idx=0')
+    for (let i=0; i<3; i++) {
+	console.log(`nextPlayer: idx=${idx}`)
+	if (this.players[idx] === undefined) {
+	    console.log(`nextPlayer: ERROR`)
+	}
+	yield this.players[idx]
+	idx = (idx + 1) % this.n
+    }
+    //.-self.gmethod
+
+    /*
+    *players(rounds) { // generator method
+	while (this.rounds < rounds) {
+	    this.playerTurn = this.playerNextTurn
+	    this.playerNextTurn++
+	    if (this.playerNextTurn >= this.n) {
+		this.playerNextTurn = 0
+		this.rounds++
+	    }
+	    yield this.sockets[this.playerTurn] // return the socket
+	}
+    }*/
+}
+module.exports = gameroomClass
+//.} # end def output
+//.} # end class gameroomClass
+
+//.gameroom = gameroomClass('gameroomClass.js', '')
+
+//.-pet

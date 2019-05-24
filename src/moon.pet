@@ -1,0 +1,64 @@
+# first line is ignored
+Running @pet.srcFile@..
+///pet.include('simpleFeature.pet')
+///pet.include('template.js.pet')
+///pet.include('opovl.pet')
+
+Loading features..
+//.# Features
+///#pet.include('pixi.pet')
+
+Loading templates..
+//.# Templates
+///pet.include('mainServer.js.pet')
+///pet.include('app.js.pet')
+///pet.include('routes_index.js.pet')
+///pet.include('gameServer.js.pet')
+///pet.include('room.js.pet')
+///pet.include('gameroom.js.pet')
+///pet.include('clerk.js.pet')
+///pet.include('gameclerk.js.pet')
+///pet.include('layout.pug.pet')
+///pet.include('error.pug.pet')
+///pet.include('index.pug.pet')
+///pet.include('main.js.pet')
+///pet.include('moon.js.pet')
+///pet.include('bone.js.pet')
+///pet.include('bones.js.pet')
+///pet.include('bid.js.pet')
+///pet.include('call.js.pet')
+///pet.include('shake.js.pet')
+///pet.include('player.js.pet')
+
+Adding features..
+//.# Add Features
+//.gameServer(mainServer, moon)
+//.gameroom(mainServer)
+//.gameclerk(mainServer)
+//.index(main)
+//.moon(layout, main)
+//.main(layout) # client
+//.bones(layout, index, gameServer, moon)
+//.bid(index, moon, gameServer)
+//.call(index, moon, gameServer)
+//.shake(moon, gameServer)
+//.player(mainServer)
+
+Writing template files..
+//.# Write Template Files
+//.mainServer.write()
+//.app.write()
+//.routesIndex.write()
+//.gameServer.write()
+//.room.write()
+//.gameroom.write()
+//.clerk.write()
+//.gameclerk.write()
+//.bone.write()
+//.bones.write()
+//.player.write()
+//.layout.write()
+//.errpug.write()
+//.index.write()
+//.main.write()
+//.moon.write()

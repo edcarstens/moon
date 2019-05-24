@@ -1,0 +1,25 @@
+//.#-*-Javascript-*-
+//.+pet
+PET Template for playerClass.js
+-------------------------------
+
+//.class playerClass(templatejs):{
+//. def add(self, mainServer):{
+//.  mainServer < 'let'
+let playerClass = require('./playerClass')
+//. }
+//. def output(self):{
+class playerClass {
+    //.+self.init('socket', 'nickName')
+    this.bid = 0
+    this.tricks = 0
+    this.score = 0
+    this.wins = 0
+    this.idx = 0
+    //.-self.init
+}
+module.exports = playerClass
+//. }
+//.}
+//.player = playerClass('playerClass.js', '')
+//.-pet

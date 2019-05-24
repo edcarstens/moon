@@ -1,0 +1,79 @@
+//.#-*-Javascript-*-
+//.+pet
+//.class clerkClass(templatejs):{
+//.def output(self):{
+let roomClass = require('./roomClass')
+class clerkClass {
+    //.+self.init('io','clientsPerRoom')
+    this.rooms = {}
+    this.vacancies = []
+    this.roomNumber = 0
+    this.roomNumberOf = {}
+    //.-self.init
+
+    //.+self.method('newRoom', 'roomId')
+    return new roomClass(this.io, roomId, this.clientsPerRoom)
+    //.-self.method
+
+    //.+self.method('getVacancies')
+    let rv = {vacancies:{}}
+    if (this.vacancies.length) {
+	for (let roomNumber of this.vacancies) {
+	    if (! (roomNumber in rv)) {
+		rv.vacancies[roomNumber] = 1
+		rv[roomNumber] = this.rooms[roomNumber]
+	    }
+	    else {
+		rv.vacancies[roomNumber] += 1
+	    }
+	}
+    }
+    //.-self.method('rv')
+    
+    //.+self.method('arrive', 'socket', 'nickName=""')
+    let io = this.io
+    let x,i,r
+    if (this.vacancies.length) {
+	x = this.vacancies.shift() // room # of oldest vacancy first
+	r = this.rooms[x]
+    }
+    else {
+	x = this.roomNumber++
+	r = this.newRoom(x)
+	this.rooms[x] = r
+	for(i=0; i<this.clientsPerRoom-1; i++) {
+            this.vacancies.push(x)
+        }
+    }
+    this.roomNumberOf[socket.id] = x
+    return r.arrive(socket, nickName)
+    //.-self.method
+
+    //.+self.method('leave', 'socket')
+    let io = this.io
+    let x = this.roomNumberOf[socket.id]
+    delete this.roomNumberOf[socket.id]
+    if (this.rooms[x].leave(socket)) {
+        this.vacancies.push(x)
+    }
+    else {
+        console.log('closing room ' + x)
+        // remove the vacancies for this room
+        this.removeVacancies(x)
+        // remove the room
+        delete this.rooms[x]
+    }
+    //.-self.method
+
+    //.+self.method('removeVacancies', 'x')
+    this.vacancies = this.vacancies.filter((xx) => { return (xx != x) })
+    //.-self.method
+}
+module.exports = clerkClass
+//.} # end def output
+//.} # end class clerkClass
+
+//.clerk = clerkClass('clerkClass.js', '')
+
+//.-pet
+

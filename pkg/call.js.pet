@@ -1,0 +1,77 @@
+//.#-*-Javascript-*-
+//.+pet
+PET Feature: Call for MOON
+--------------------------
+
+//.class callClass(feature):{
+//. def add(self, index, moon, gameServer):{
+//.  index < 'block content'
+//.+pet
+/* ----- trick so emacs ignores this section -----
+//.-pet
+//.calls = (1,2,3,4,5,6,'Doubles','Follow Me')
+//.y = (620,550,480,410,340,270,200,130)
+//.for i in range(8):{
+button#btnCall@i@(class="w3-button w3-white w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:100px; height:50px; top:@y[i]@px; right:100px;' disabled) <b>@calls[i]@</b>
+//.}
+//.+pet
+-- -----------------------------------------------
+*/
+//.-pet
+//.  moon < 'gotoLogin body'
+for (let i=0; i<8; i++) {
+    $('#btnCall' + i).hide()
+}
+//.  moon < 'start1'
+for (let i=0; i<8; i++) {
+    $('#btnCall' + i).on('click', () => {
+	moon._callClicked(i + 1)
+    })
+}
+//.  moon < 'cmds'
+else if (data.cmd == 'call') {
+    $('#message').html(`<b>Call your trump suit</b>`)
+    $('#message').show()
+    let call
+    let choices = data.choices
+    for (let choice in choices) {
+	if (choices[choice]) {
+	    $('#btnCall' + choice).show()
+	    $('#btnCall' + choice).prop("disabled", false)
+	}
+	else {
+	    $('#btnCall' + choice).hide()
+	    $('#btnCall' + choice).prop("disabled", true)
+	}
+    }
+    call = await moon.callClicked()
+    console.log('My call is ' + call)
+    moon.socket.emit('done', {call})
+    for (let i=0; i<8; i++) {
+	$('#btnCall' + i).hide()
+    }
+    $('#message').hide()
+}
+//.  +gameServer.amethod('getCall', 'caller') < 'body'
+let data = {cmd:'call', choices:['1','2','3','4','5','6','doubles','none']}
+let result = await this.playerTurn(caller, data, 60)
+let call = result.call
+//.  -gameServer.amethod('call')
+
+//.gameServer < 'constructor body'
+this.call = 'Follow Me'
+
+//.  moon < 'classvars'
+_callClicked: (call) => call,
+//.  moon < 'body'
+//.  +moon.afunction('callClicked')
+return new Promise( (resolve, reject) => {
+    moon._callClicked = (call) => {
+	resolve(call)
+    }
+})  
+//.  -moon.afunction
+//. } # def add
+//.} # class
+//.call = callClass()
+//.-pet
