@@ -13,8 +13,11 @@ $('#maintop').width(width);
 $('#maintop').height(height);
 $('#inputChatName').css("left", width/2 - 200);
 $('#inputChatName').css("top", height/2 - 50);
-$('#btnPlay').css("left", width/2 - 45);
-$('#btnPlay').css("top", height/2 - 50 + 70);
+for (let i=0; i<3; i++) {
+    $('#btnRoom' + i).css("left", width/2 - 45 - 210 + 210*i);
+    //$('#btnRoom' + i).css("top", height/2 - 50 + 70);
+    $('#btnRoom' + i).css("top", 70);
+}
 console.log('Welcome to MOON')
 moon.init(
     socket

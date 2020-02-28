@@ -12,6 +12,8 @@ moon = {
     	7: 'doubles',
     	8: 'follow me'
         },
+        roomOfBtn: {0:0,1:1,2:2},
+        room: null,
         _boneClicked: (boneId) => boneId,
         clickBoneId: {},
         _bidClicked: (bid) => bid,
@@ -20,11 +22,14 @@ moon = {
 
 moon.gotoLogin = function(
 ) {
-    $('#btnPlay').show()
+    $('#btnRoom1').show()
+    $('#btnRoom2').show()
+    $('#btnRoom3').show()
     $('#inputChatName').show()
     $('#gfx').hide()
     $('#btnSend').hide()
     $('#inputMessage').hide()
+    $('#btnPlayWithBots').hide()
     $('#btnBone0').hide();
     $('#tile00').hide()
     $('#btnBone1').hide();
@@ -84,11 +89,33 @@ moon.init = function(
 }
 moon.clickPlay = async function(
 ) {
-    return new Promise( (resolve, reject) => {
-        $('#btnPlay').on('click', () => {
-    	resolve($("#inputChatName").val())
-        })
-    })
+    //let p0 = new Promise( (resolve, reject) => {
+    //    $('#btnPlay').on('click', () => {
+    //	resolve($("#inputChatName").val())
+    //    })
+    //})
+    let plist = []
+    //let i
+    for (let i=0; i<3; i++) {
+        plist.push( new Promise( (resolve, reject) => {
+    	$('#btnRoom' + i).on('click', () => {
+    	    resolve({player:$("#inputChatName").val(), room:i})
+    	})
+        }) )
+    //    plist.push( new Promise( (resolve, reject) => {
+    //	$('#btnRoom1').on('click', () => {
+    //	    resolve({player:$("#inputChatName").val(), room:1})
+    //	})
+    //    }) )
+    //    plist.push( new Promise( (resolve, reject) => {
+    //	$('#btnRoom2').on('click', () => {
+    //	    resolve({player:$("#inputChatName").val(), room:2})
+    //	})
+    //    }) )
+    }
+    //console.log(plist)
+    let p = Promise.race(plist)
+    return p
 }
 moon.clickSend = async function(
 ) {
@@ -144,9 +171,6 @@ moon.delay = async function(
 ) {
     return new Promise( resolve => setTimeout(resolve, time) )
 }
-//moon.socket.on('drewbone', (data) => {
-//    console.log(`Player ${data.player} drew bone ${data.bone}`)
-//})
 moon.start = async function(
 ) {
     let data, bone, boneId
@@ -154,22 +178,69 @@ moon.start = async function(
     console.log('Starting MOON...')
     $('#trump').hide()
     $('#suit').hide()
+    
     // Need to show active gamerooms with moonbots..
-    moon.socket.on('vacancies', vacancies => {
-        console.log('vacancies..')
-        console.log(vacancies)
+    moon.socket.on('vacancies', data => {
+        //console.log('vacancies..')
+        //console.log(data.vacancies)
+        //console.log(data)
+        var rooms = []
+        if (moon.room == null) {
+    	for (let room in data.vacancies) {
+    	    rooms.push(room)
+    	}
+    	//console.log('rooms')
+    	//console.log(rooms)
+    	//let room = data[Number(rooms[0])]
+    	for (let i=0; i<3; i++) {
+    	    if (rooms.length > i) {
+    		let room = data[rooms[i]]
+    		//console.log('room')
+    		//console.log(room)
+    		let players = room.players
+    		//console.log(players)
+    		let playerNames = []
+    		for (player of players) {
+    		    playerNames.push(moon.limit(player.nickName,7))
+    		}
+    		//console.log(playerNames)
+    		moon.roomOfBtn[i] = i
+    		$('#btnRoom' + i).html(`<b>Room_ ${i}: ${playerNames.join('<br>')}</b>`)
+    		$('#btnRoom' + i).show()
+    	    }
+    	    else { // new room
+    		moon.roomOfBtn[i] = -1
+    		$('#btnRoom' + i).html(`<b>(New Room)</b>`)
+    		$('#btnRoom' + i).show()
+    	    }
+    	}
+        }
     })
-    moon.player = await moon.clickPlay()
-    $('#btnPlay').hide()
+    
+    let x = await moon.clickPlay()
+    console.log(`x=${x}`)
+    console.log(x)
+    moon.player = x.player
+    moon.room = moon.roomOfBtn[x.room]
+    for(let i=0; i<3; i++) {
+        $('#btnRoom' + i).hide()
+    }
     $('#inputChatName').hide()
     $('#btnSend').show()
     $('#inputMessage').show()
     console.log(`Hello ${moon.player}`)
-    moon.socket.emit('roomreq', {player:moon.player})
+    console.log(`You requested room ${moon.room}`)
+    moon.socket.emit('roomreq', {player:moon.player, room:moon.room})
     moon.room = await moon.rxRoom()
     console.log(`You get ${moon.room}`)
     $('#message').html('<b>Waiting For Players..</b>')
     $('#message').show()
+    $('#btnPlayWithBots').show()
+    $('#btnPlayWithBots').on('click', () => {
+        console.log('sending request to server to play with bots..')
+        moon.socket.emit('playWithBots', {socketId:moon.socket.id, player:moon.player, room:moon.room})
+        $('#btnPlayWithBots').hide()
+    })
     $('#btnBone0').show();
     $('#tile00').hide()
     $('#btnBone1').show();
@@ -219,6 +290,8 @@ moon.start = async function(
     	moon._bidClicked(i)
         })
     }
+    
+    
     for (let i=0; i<8; i++) {
         $('#btnCall' + i).on('click', () => {
     	moon._callClicked(i + 1)
@@ -239,7 +312,7 @@ moon.start = async function(
         let bone = data.bone
         $('#message').html(`<b>${data.player} played ${bone.boneStr}</b>`)
         $('#message').show()
-        if (socket.id != data.socketId) {
+        //if (socket.id != data.socketId) {
     	bones.pool[boneId].faceup = bone.faceup
     	bones.pool[boneId].owner = bone.owner
     	bones.pool[boneId].trick = bone.trick
@@ -247,7 +320,7 @@ moon.start = async function(
     	bones.pool[boneId].played = bone.played
     	bones.pool[boneId].discarded = bone.discarded
     	bones.display(false)
-        }
+        //}
     })
     
     moon.socket.on('info', (s) => {
@@ -268,47 +341,33 @@ moon.start = async function(
         //done = (data.cmd == 'shake')
         $('#suit').hide()
         $('#trump').hide()
-        if (data.cmd == 'draw') {
-    	bones.pool = data.bones
-    	bones.display(true)
-    	$('#message').html(`<b>Draw one domino</b>`)
-    	$('#message').show()
-    	boneId = await moon.boneClicked()
-    	bones.pool[boneId].faceup = true
-    	//bones.pool[boneId].owner = moon.socket.id
-    	console.log(`I drew ${boneId}`)
-    	bones.display(false)
-    	moon._boneClicked = (boneId) => boneId
-    	moon.socket.emit('done', {boneId})
-    	$('#message').hide()
-        }
-        else if (data.cmd == 'bid') {
+        if (data.cmd == 'bid') {
             $('#message').html(`<b>State your bid</b>`)
             $('#message').show()
             let bid
             let choices = [true] // pass is always a choice
             console.log('Max bid is ' + data.maxBid)
             for (let i=1; i<6; i++) {
-        	choices.push( (i > data.maxBid) )
+                choices.push( (i > data.maxBid) )
             }
             if (data.maxBid == -2) {
-        	choices[0] = false // stuck bid
+                choices[0] = false // stuck bid
             }
             for (let choice in choices) {
-        	if (choices[choice]) {
-        	    $('#btnBid' + choice).show()
-        	    $('#btnBid' + choice).prop("disabled", false)
-        	}
-        	else {
-        	    $('#btnBid' + choice).hide()
-        	    $('#btnBid' + choice).prop("disabled", true)
-        	}
+                if (choices[choice]) {
+            	$('#btnBid' + choice).show()
+            	$('#btnBid' + choice).prop("disabled", false)
+                }
+                else {
+            	$('#btnBid' + choice).hide()
+            	$('#btnBid' + choice).prop("disabled", true)
+                }
             }
             bid = await moon.bidClicked()
             console.log('My bid is ' + bid)
             moon.socket.emit('done', {bid})
             for (let i=0; i<6; i++) {
-        	$('#btnBid' + i).hide()
+                $('#btnBid' + i).hide()
             }
             $('#message').hide()
         }
@@ -318,24 +377,23 @@ moon.start = async function(
             let call
             let choices = data.choices
             for (let choice in choices) {
-        	if (choices[choice]) {
-        	    $('#btnCall' + choice).show()
-        	    $('#btnCall' + choice).prop("disabled", false)
-        	}
-        	else {
-        	    $('#btnCall' + choice).hide()
-        	    $('#btnCall' + choice).prop("disabled", true)
-        	}
+                if (choices[choice]) {
+            	$('#btnCall' + choice).show()
+            	$('#btnCall' + choice).prop("disabled", false)
+                }
+                else {
+            	$('#btnCall' + choice).hide()
+            	$('#btnCall' + choice).prop("disabled", true)
+                }
             }
             call = await moon.callClicked()
             console.log('My call is ' + call)
             moon.socket.emit('done', {call})
             for (let i=0; i<8; i++) {
-        	$('#btnCall' + i).hide()
+                $('#btnCall' + i).hide()
             }
             $('#message').hide()
         }
-    
         else if (data.cmd == 'shake') {
             bones.pool = data.bones
             bones.display(true)
@@ -351,95 +409,120 @@ moon.start = async function(
             moon.socket.emit('done', {boneId})
             $('#message').hide()
         }
+        else if (data.cmd == 'play') {
+            bones.pool = data.bones
+            //console.log(data.stats)
+            bones.display(true)
+            $('#message').html(`<b>Play a domino</b>`)
+            $('#message').show()
+            this.displayStats(data.stats)
+            //console.log(data.maxBone)
+            this.displaySuit(data.maxBone)
+            this.displayTrump(data.trump)
+            boneId = -1
+            while (boneId < 0) {
+                boneId = await moon.boneClicked()
+                if (boneId < 0) {
+            	let txt1 = 'Illegal play - '
+            	let txt2 = ''
+            	if (boneId == -1) {
+            	    txt2 = 'Must follow suit'
+            	}
+            	if (boneId <= -2) {
+            	    txt2 = 'Choose one from your hand'
+            	}
+            	$('#message').html(`<b>${txt1}${txt2}</b>`)
+                }
+            }
+            bones.pool[boneId].faceup = true
+            bones.pool[boneId].owner = ''
+            bones.pool[boneId].played = true
+            console.log(`I played boneId ${boneId}`)
+            bones.display(false)
+            moon._boneClicked = (boneId) => boneId
+            moon.socket.emit('done', {boneId})
+            $('#message').hide()
+        }
+        else if (data.cmd == 'draw') {
+            bones.pool = data.bones
+            bones.display(true)
+            $('#message').html(`<b>Draw one domino</b>`)
+            $('#message').show()
+            boneId = await moon.boneClicked()
+            bones.pool[boneId].faceup = true
+            //bones.pool[boneId].owner = moon.socket.id
+            console.log(`I drew ${boneId}`)
+            bones.display(false)
+            moon._boneClicked = (boneId) => boneId
+            moon.socket.emit('done', {boneId})
+            $('#message').hide()
+        }
         else if (data.cmd == 'draw7') {
-    	//console.log(data.bones)
-    	bones.pool = data.bones
-    	//console.log(bones.pool)
-    	let boneIds = []
-    	let result
-    	$('#message').html(`<b>Select 7 dominoes</b>`)
-    	$('#message').show()
-    	this.displayStats(data.stats)
-    	for (let i=0; i<7; i++) {
-    	    bones.display(true)
-    	    result = await moon.boneClickedOrBot()
-    	    if (result.status == 'MOONBOTDONE') {
-    		break
-    	    }
-    	    boneId = result.boneId
-    	    console.log(`I drew ${boneId}`)
-    	    boneIds.push(boneId)
-    	    bones.pool[boneId].faceup = true
-    	    bones.pool[boneId].owner = moon.socket.id
-    	}
+            //console.log(data.bones)
+            bones.pool = data.bones
+            //console.log(bones.pool)
+            let boneIds = []
+            let result
+            $('#message').html(`<b>Select 7 dominoes</b>`)
+            $('#message').show()
+            this.displayStats(data.stats)
+            for (let i=0; i<7; i++) {
+                bones.display(true)
+                result = await moon.boneClickedOrBot()
+                if (result.status == 'MOONBOTDONE') {
+            	break
+                }
+                boneId = result.boneId
+                console.log(`I drew ${boneId}`)
+                boneIds.push(boneId)
+                bones.pool[boneId].faceup = true
+                bones.pool[boneId].owner = moon.socket.id
+            }
     
-    	if (result.status == 'MOONBOTDONE') {
-    	    for (boneId of result.boneIds) {
-    		bones.pool[boneId].faceup = true
-    		bones.pool[boneId].owner = moon.socket.id
-    	    }
-    	}
-    	else {
-    	    moon.socket.emit('done', {boneIds})
-    	}
-    	bones.display(false)
-    	$('#message').hide()
+            if (result.status == 'MOONBOTDONE') {
+                for (boneId of result.boneIds) {
+            	bones.pool[boneId].faceup = true
+            	bones.pool[boneId].owner = moon.socket.id
+                }
+            }
+            else {
+                moon.socket.emit('done', {boneIds})
+            }
+            bones.display(false)
+            $('#message').hide()
         }
         else if (data.cmd == 'discard') {
-    	// let player discard a domino (with the kitty)
-    	//console.log('Discarding -- click on one domino')
-    	bones.pool = data.bones
-    	bones.display(true)
-    	$('#message').html(`<b>Discard a domino</b>`)
-    	$('#message').show()
-    	// do I really need to find the bone in bones.pool?
-    	boneId = await moon.boneClicked()
-    	console.log(`clicked ${boneId}`)
-    	bones.pool[boneId].faceup = false
-    	bones.pool[boneId].owner = ''
-    	bones.pool[boneId].discarded = true
-    	moon.socket.emit('done', {boneId})
-    	bones.display(false)
-    	moon._boneClicked = (boneId) => boneId
-    	$('#message').hide()
-        }
-        else if (data.cmd == 'play') {
-    	bones.pool = data.bones
-    	//console.log(data.stats)
-    	bones.display(true)
-    	$('#message').html(`<b>Play a domino</b>`)
-    	$('#message').show()
-    	this.displayStats(data.stats)
-    	//console.log(data.maxBone)
-    	this.displaySuit(data.maxBone)
-    	this.displayTrump(data.trump)
-    	boneId = -1
-    	while (boneId < 0) {
-    	    boneId = await moon.boneClicked()
-    	    if (boneId < 0) {
-    		let txt1 = 'Illegal play - '
-    		let txt2 = ''
-    		if (boneId == -1) {
-    		    txt2 = 'Must follow suit'
-    		}
-    		if (boneId <= -2) {
-    		    txt2 = 'Choose one from your hand'
-    		}
-    		$('#message').html(`<b>${txt1}${txt2}</b>`)
-    	    }
-    	}
-    	bones.pool[boneId].faceup = true
-    	bones.pool[boneId].owner = ''
-    	bones.pool[boneId].played = true
-    	console.log(`I played boneId ${boneId}`)
-    	bones.display(false)
-    	moon._boneClicked = (boneId) => boneId
-    	moon.socket.emit('done', {boneId})
-    	$('#message').hide()
+            // let player discard a domino (with the kitty)
+            //console.log('Discarding -- click on one domino')
+            bones.pool = data.bones
+            bones.display(true)
+            $('#message').html(`<b>Discard a domino</b>`)
+            $('#message').show()
+            // do I really need to find the bone in bones.pool?
+            boneId = await moon.boneClicked()
+            console.log(`clicked ${boneId}`)
+            bones.pool[boneId].faceup = false
+            bones.pool[boneId].owner = ''
+            bones.pool[boneId].discarded = true
+            moon.socket.emit('done', {boneId})
+            bones.display(false)
+            moon._boneClicked = (boneId) => boneId
+            $('#message').hide()
         }
         console.log('done')
     }
     return 0
+}
+
+moon.limit = function(
+    s,
+    lim
+) {
+        let rv = s
+        if (s.length > lim) {
+    	rv = s.slice(0,lim)
+        }
+    return rv
 }
 
 moon.displayStats = function(
@@ -455,7 +538,7 @@ moon.displayStats = function(
     for (socketId of stats.socketIds) {
         let ps = stats[socketId]
         s += '<tr>'
-        s += '<td>' + ps.name   + '</td>'
+        s += '<td>' + moon.limit(ps.name, 10)   + '</td>'
         s += '<td>' + ps.wins   + '</td>'
         s += '<td>' + ps.score  + '</td>'
         s += '<td>' + ps.tricks + '</td>'
