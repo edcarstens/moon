@@ -1,0 +1,46 @@
+//.#-*-Javascript-*-
+//.+pet
+PET Feature: Play one domino
+----------------------------
+
+//.class playClass(feature):{
+//. def add(self, moon):{
+//.+moon.case("data.cmd == 'play'")
+bones.pool = data.bones
+//console.log(data.stats)
+bones.display(true)
+$('#message').html(`<b>Play a domino</b>`)
+$('#message').show()
+this.displayStats(data.stats)
+//console.log(data.maxBone)
+this.displaySuit(data.maxBone)
+this.displayTrump(data.trump)
+boneId = -1
+while (boneId < 0) {
+    boneId = await moon.boneClicked()
+    if (boneId < 0) {
+	let txt1 = 'Illegal play - '
+	let txt2 = ''
+	if (boneId == -1) {
+	    txt2 = 'Must follow suit'
+	}
+	if (boneId <= -2) {
+	    txt2 = 'Choose one from your hand'
+	}
+	$('#message').html(`<b>${txt1}${txt2}</b>`)
+    }
+}
+bones.pool[boneId].faceup = true
+bones.pool[boneId].owner = ''
+bones.pool[boneId].played = true
+console.log(`I played boneId ${boneId}`)
+bones.display(false)
+moon._boneClicked = (boneId) => boneId
+moon.socket.emit('done', {boneId})
+$('#message').hide()
+//.-moon.case
+
+//. } # def add
+//.} # class
+//.play = playClass()
+//.-pet

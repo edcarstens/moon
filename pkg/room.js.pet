@@ -10,6 +10,7 @@ class roomClass {
     this.isFull = false
     //.-self.init
     //.+self.method('arrive', 'socket', 'nickName')
+    console.log('arrive: ' + nickName)
     let io = this.io
     socket.join(this.name)
     this.sockets.push([socket, nickName])

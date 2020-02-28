@@ -28,49 +28,48 @@ for (let i=0; i<8; i++) {
 	moon._callClicked(i + 1)
     })
 }
-//.  moon < 'cmds'
-else if (data.cmd == 'call') {
-    $('#message').html(`<b>Call your trump suit</b>`)
-    $('#message').show()
-    let call
-    let choices = data.choices
-    for (let choice in choices) {
-	if (choices[choice]) {
-	    $('#btnCall' + choice).show()
-	    $('#btnCall' + choice).prop("disabled", false)
-	}
-	else {
-	    $('#btnCall' + choice).hide()
-	    $('#btnCall' + choice).prop("disabled", true)
-	}
+//.+moon.case("data.cmd == 'call'")
+$('#message').html(`<b>Call your trump suit</b>`)
+$('#message').show()
+let call
+let choices = data.choices
+for (let choice in choices) {
+    if (choices[choice]) {
+	$('#btnCall' + choice).show()
+	$('#btnCall' + choice).prop("disabled", false)
     }
-    call = await moon.callClicked()
-    console.log('My call is ' + call)
-    moon.socket.emit('done', {call})
-    for (let i=0; i<8; i++) {
-	$('#btnCall' + i).hide()
+    else {
+	$('#btnCall' + choice).hide()
+	$('#btnCall' + choice).prop("disabled", true)
     }
-    $('#message').hide()
 }
-//.  +gameServer.amethod('getCall', 'caller') < 'body'
+call = await moon.callClicked()
+console.log('My call is ' + call)
+moon.socket.emit('done', {call})
+for (let i=0; i<8; i++) {
+    $('#btnCall' + i).hide()
+}
+$('#message').hide()
+//.-moon.case
+
+//.+gameServer.amethod('getCall', 'caller') < 'body'
 let data = {cmd:'call', choices:['1','2','3','4','5','6','doubles','none']}
 let result = await this.playerTurn(caller, data, 60)
 let call = result.call
-//.  -gameServer.amethod('call')
+//.-gameServer.amethod('call')
 
 //.gameServer < 'constructor body'
 this.call = 'Follow Me'
 
-//.  moon < 'classvars'
+//.moon < 'classvars'
 _callClicked: (call) => call,
-//.  moon < 'body'
-//.  +moon.afunction('callClicked')
+//.+moon.afunction('callClicked') < 'body'
 return new Promise( (resolve, reject) => {
     moon._callClicked = (call) => {
 	resolve(call)
     }
 })  
-//.  -moon.afunction
+//.-moon.afunction
 //. } # def add
 //.} # class
 //.call = callClass()

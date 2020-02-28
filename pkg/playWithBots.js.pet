@@ -1,0 +1,49 @@
+//.#-*-Javascript-*-
+//.+pet
+PET Feature: Play With Bots for Moon
+------------------------------------
+
+//.class playWithBotsClass(feature):{
+//. def add(self, index, moon, mainServer, clerk):{
+//.  index < 'block content'
+//.+pet
+/* ----- trick so emacs ignores this section -----
+//.-pet
+button#btnPlayWithBots(class="w3-button w3-green w3-border w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:200px; height:100px; top:200px; left:100px;') <b>Play with Bots</b>
+//.+pet
+-- -----------------------------------------------
+*/
+//.-pet
+//.  moon < 'gotoLogin body'
+$('#btnPlayWithBots').hide()
+//.  moon < 'start1'
+$('#btnPlayWithBots').show()
+$('#btnPlayWithBots').on('click', () => {
+    console.log('sending request to server to play with bots..')
+    moon.socket.emit('playWithBots', {socketId:moon.socket.id, player:moon.player, room:moon.room})
+    $('#btnPlayWithBots').hide()
+})
+//.  mainServer < 'connection triggers'
+//.+mainServer.socket().once('playWithBots')
+console.log(`Player ${data.player} in ${data.room} wants to play with bots`)
+clerk.playWithBots(data)
+//.-mainServer.socket
+//. clerk < 'body'
+//.+clerk.method('playWithBots', 'data')
+console.log('clerk method playWithBots called')
+console.log(data)
+let x = this.roomNumberOf[data.socketId]
+let r = this.rooms[x]
+if (r) {
+    r.playMoon()
+}
+else {
+    console.log(`ERROR - Bad room ID, ${x}`)
+    console.log(r)
+    process.kill(process.pid, 'SIGTERM')
+}
+//.-clerk.method
+//. } # def add
+//.} # class
+//.playWithBots = playWithBotsClass()
+//.-pet

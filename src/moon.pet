@@ -29,20 +29,28 @@ Loading templates..
 ///pet.include('call.js.pet')
 ///pet.include('shake.js.pet')
 ///pet.include('player.js.pet')
+///pet.include('play.js.pet')
+///pet.include('draw.js.pet')
+///pet.include('discard.js.pet')
+///pet.include('playWithBots.js.pet')
 
 Adding features..
 //.# Add Features
 //.gameServer(mainServer, moon)
+//.playWithBots(index, moon, mainServer, clerk)
 //.gameroom(mainServer)
 //.gameclerk(mainServer)
 //.index(main)
-//.moon(layout, main)
+//.moon(layout, index, main)
 //.main(layout) # client
 //.bones(layout, index, gameServer, moon)
 //.bid(index, moon, gameServer)
 //.call(index, moon, gameServer)
 //.shake(moon, gameServer)
 //.player(mainServer)
+//.play(moon)
+//.draw(moon)
+//.discard(moon)
 
 Writing template files..
 //.# Write Template Files

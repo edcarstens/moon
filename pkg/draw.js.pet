@@ -1,0 +1,60 @@
+//.#-*-Javascript-*-
+//.+pet
+PET Feature: Draw domino(s)
+---------------------------
+
+//.class drawClass(feature):{
+//. def add(self, moon):{
+//.+moon.case("data.cmd == 'draw'")
+bones.pool = data.bones
+bones.display(true)
+$('#message').html(`<b>Draw one domino</b>`)
+$('#message').show()
+boneId = await moon.boneClicked()
+bones.pool[boneId].faceup = true
+//bones.pool[boneId].owner = moon.socket.id
+console.log(`I drew ${boneId}`)
+bones.display(false)
+moon._boneClicked = (boneId) => boneId
+moon.socket.emit('done', {boneId})
+$('#message').hide()
+//.-moon.case
+//.+moon.case("data.cmd == 'draw7'")
+//console.log(data.bones)
+bones.pool = data.bones
+//console.log(bones.pool)
+let boneIds = []
+let result
+$('#message').html(`<b>Select 7 dominoes</b>`)
+$('#message').show()
+this.displayStats(data.stats)
+for (let i=0; i<7; i++) {
+    bones.display(true)
+    result = await moon.boneClickedOrBot()
+    if (result.status == 'MOONBOTDONE') {
+	break
+    }
+    boneId = result.boneId
+    console.log(`I drew ${boneId}`)
+    boneIds.push(boneId)
+    bones.pool[boneId].faceup = true
+    bones.pool[boneId].owner = moon.socket.id
+}
+
+if (result.status == 'MOONBOTDONE') {
+    for (boneId of result.boneIds) {
+	bones.pool[boneId].faceup = true
+	bones.pool[boneId].owner = moon.socket.id
+    }
+}
+else {
+    moon.socket.emit('done', {boneIds})
+}
+bones.display(false)
+$('#message').hide()
+//.-moon.case
+
+//. } # def add
+//.} # class
+//.draw = drawClass()
+//.-pet

@@ -27,12 +27,14 @@ class gameServerClass {
     let p1 = new Promise( resolve => {
 	console.log(`Emitting yourturn event to client ${player.nickName} with {${data.cmd} ..`)
 	data.status = 'ACK'
+	// Pass resolve function as an ack function
 	player.socket.emit('yourturn', data, resolve)
     })
     let p2 = new Promise( resolve => {
 	setTimeout(resolve, 1000, {status:'RETRY'})
     })
     let p3 = new Promise( resolve => {
+	// Set haltGame function to this resolve function
 	this.haltGame = resolve
     })
     let p = Promise.race([p1,p2,p3])
@@ -405,6 +407,9 @@ class gameServerClass {
 	}
     }
     for (let player of room.nextPlayer(leadPlayer.idx)) {
+	if (player != caller) {
+	    player.score += player.tricks
+	}
 	player.tricks = 0
 	//console.log(`Player ${player.nickName} : ${player.score}`)
     }

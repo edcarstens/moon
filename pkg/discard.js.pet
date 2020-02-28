@@ -1,0 +1,30 @@
+//.#-*-Javascript-*-
+//.+pet
+PET Feature: Discard one domino
+-------------------------------
+
+//.class discardClass(feature):{
+//. def add(self, moon):{
+//.+moon.case("data.cmd == 'discard'")
+// let player discard a domino (with the kitty)
+//console.log('Discarding -- click on one domino')
+bones.pool = data.bones
+bones.display(true)
+$('#message').html(`<b>Discard a domino</b>`)
+$('#message').show()
+// do I really need to find the bone in bones.pool?
+boneId = await moon.boneClicked()
+console.log(`clicked ${boneId}`)
+bones.pool[boneId].faceup = false
+bones.pool[boneId].owner = ''
+bones.pool[boneId].discarded = true
+moon.socket.emit('done', {boneId})
+bones.display(false)
+moon._boneClicked = (boneId) => boneId
+$('#message').hide()
+//.-moon.case
+
+//. } # def add
+//.} # class
+//.discard = discardClass()
+//.-pet

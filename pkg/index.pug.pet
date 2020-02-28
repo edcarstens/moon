@@ -13,8 +13,11 @@ $('#maintop').width(width);
 $('#maintop').height(height);
 $('#inputChatName').css("left", width/2 - 200);
 $('#inputChatName').css("top", height/2 - 50);
-$('#btnPlay').css("left", width/2 - 45);
-$('#btnPlay').css("top", height/2 - 50 + 70);
+for (let i=0; i<3; i++) {
+    $('#btnRoom' + i).css("left", width/2 - 45 - 210 + 210*i);
+    //$('#btnRoom' + i).css("top", height/2 - 50 + 70);
+    $('#btnRoom' + i).css("top", 70);
+}
 //. }
 
 //. def output(self):{
@@ -24,7 +27,7 @@ block content
   div#maintop(class="w3-blue" style='position:absolute; width:1136px; height:470px; top:0px; left:0px;')
     div#gfx(style='position:absolute; width:100%; height:100%; top:60px; left:20px')
     input#inputChatName(class="w3-input w3-border w3-round-xxlarge w3-xlarge" type='text', placeholder='Nickname', style='position:absolute; width:400px; top:200px; left:368px;')
-    button#btnPlay(class="w3-button w3-large w3-circle w3-green w3-hover-green w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:90px; height:90px; top:270px; left:518px;') <b>PLAY</b>
+//.#    button#btnPlay(class="w3-button w3-large w3-circle w3-green w3-hover-green w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:90px; height:90px; top:270px; left:518px;') <b>PLAY</b>
     input#inputMessage(class="w3-blue-grey w3-input w3-border w3-xlarge" type='text', placeholder='Message', style='position:absolute; width:996px; bottom:20px; left:20px;')
     button#btnSend(class="w3-button w3-round-xlarge w3-blue-grey w3-hover-blue-grey w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:90px; height:50px; bottom:20px; right:15px;') <b>SEND</b>
     //.petf > 'block content'
