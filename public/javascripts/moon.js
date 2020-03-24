@@ -337,6 +337,7 @@ moon.start = async function(
     
     while (! done) {
         data = await moon.myTurn()
+        $('#btnPlayWithBots').hide()
         console.log(`My turn to ${data.cmd}`)
         //done = (data.cmd == 'shake')
         $('#suit').hide()

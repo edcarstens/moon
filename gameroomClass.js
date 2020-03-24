@@ -36,7 +36,7 @@ class gameroomClass extends roomClass {
             this.gameServer.playMoon(this).then( (x) => {
         	console.log('Game ended..')
         	this.gameServer = null
-        	process.kill(process.pid, 'SIGTERM')
+        //	process.kill(process.pid, 'SIGTERM')
             })
     }
     

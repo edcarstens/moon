@@ -408,7 +408,7 @@ class gameServerClass {
         	player.tricks = 0
         	let pool = await this.sendBonePool(socketId)
         	let data = {cmd:'draw7', bones:pool, stats:stats}
-        	let result = await this.playerTurn(player, data, 30)
+        	let result = await this.playerTurn(player, data, 60)
         	if (this.replaceSocketMap.has(socketId)) {
         	    socketId = this.replaceSocketMap.get(socketId)
         	}
@@ -429,7 +429,7 @@ class gameServerClass {
             console.log(`Player ${caller.nickName} won the bid`)
             let callerPool = await this.sendBonePool(caller.socket.id)
             let data = {cmd:'discard', bones:callerPool}
-            let result = await this.playerTurn(caller, data, 60)
+            let result = await this.playerTurn(caller, data, 180)
             let boneId = result.boneId
             console.log(`boneId = ${boneId}`)
             let bone = this.bonepool[boneId]
