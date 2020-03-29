@@ -53,13 +53,15 @@ class gameroomClass extends roomClass {
     //.+self.method('playMoon')
     var i = this.players.length
     while (this.players.length < this.maxCapacity) {
-	let p = new playerClass({id:'moonbot'}, 'moonbot')
+	let name = 'moonbot' + str(i)
+	let p = new playerClass({id:name}, name)
 	p.idx = i++
 	this.players.push(p)
     }
     this.n = 3
     this.isFull = true
     console.log('Starting game..')
+    this.io.to(this.name).emit('startmoon', {roomName:this.name, roomid:this.id})
     this.gameServer = new gameServerClass(this.io, this, this.players)
     this.gameServer.playMoon(this).then( (x) => {
 	console.log('Game ended..')
