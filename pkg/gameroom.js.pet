@@ -53,7 +53,7 @@ class gameroomClass extends roomClass {
     //.+self.method('playMoon')
     var i = this.players.length
     while (this.players.length < this.maxCapacity) {
-	let name = 'moonbot' + str(i)
+	let name = `moonbot${i}`
 	let p = new playerClass({id:name}, name)
 	p.idx = i++
 	this.players.push(p)
