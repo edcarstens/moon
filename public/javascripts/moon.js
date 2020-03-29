@@ -155,6 +155,14 @@ moon.rxRoom = async function(
         })
     })
 }
+moon.waitForStart = async function(
+) {
+    return new Promise( (resolve, reject) => {
+        moon.socket.once('startmoon', (data) => {
+    	resolve(data.roomName)
+        })
+    })
+}
 moon.myTurn = async function(
 ) {
     return new Promise( (resolve, reject) => {
@@ -229,6 +237,12 @@ moon.start = async function(
     $('#btnSend').show()
     $('#inputMessage').show()
     console.log(`Hello ${moon.player}`)
+    moon.waitForStart().then( (x) => {
+        console.log('Moon game starting..')
+        $('#message').html('<b>Moon Game Starting..</b>')
+        $('#message').show()
+        $('#btnPlayWithBots').hide()
+    })
     console.log(`You requested room ${moon.room}`)
     moon.socket.emit('roomreq', {player:moon.player, room:moon.room})
     moon.room = await moon.rxRoom()
@@ -337,7 +351,6 @@ moon.start = async function(
     
     while (! done) {
         data = await moon.myTurn()
-        $('#btnPlayWithBots').hide()
         console.log(`My turn to ${data.cmd}`)
         //done = (data.cmd == 'shake')
         $('#suit').hide()
