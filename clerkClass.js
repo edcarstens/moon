@@ -112,9 +112,13 @@ class clerkClass {
     ) {
             //this.vacancies = this.vacancies.filter((xx) => { return (xx != x) })
             var idx = this.vacancies.indexOf(x)
-            if (idx >= 0) {
+            console.log(this.vacancies)
+            console.log(`removeVacancies: idx=${idx}`)
+            while (idx >= 0) {
         	this.vacancies.splice(idx, 1)
+        	idx = this.vacancies.indexOf(x)
             }
+            console.log(this.vacancies)
     }
 
     playWithBots(
