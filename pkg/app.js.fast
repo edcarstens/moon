@@ -1,10 +1,12 @@
 //.#-*-Javascript-*-
-//.+pet
-PET Template for app.js
------------------------
+//.+fast
+FAST Template for app.js
+------------------------
 
-//.class appClass(template):{
-//. def output(self):{
+//.#app = Section('app')
+//.app = sec.app('app.js')
+//.def addApp():{
+//.+app
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -53,9 +55,7 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-//. }
+//.-app
 //.}
 
-//.app = appClass('app.js')
-
-//.-pet
+//.-fast

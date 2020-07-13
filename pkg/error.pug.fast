@@ -1,0 +1,21 @@
+//.#-*-Javascript-*-
+//.+fast
+FAST Template for error.pug
+---------------------------
+
+//.#errpug = Section('errpug')
+//.errpug = sec.errpug('views/error.pug')
+
+//.def addErrpug():{
+//.this = +errpug
+extends layout
+
+block content
+  h1= message
+  h2= error.status
+  pre #{error.stack}
+
+//.-this
+//.} # end def addErrpug
+
+//.-fast
