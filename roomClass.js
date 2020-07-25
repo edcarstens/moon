@@ -12,9 +12,10 @@ class roomClass {
         this.n = 0 // current number of occupants
         this.isFull = false
     }
+        
     arrive(
         socket,
-        nickName
+            nickName
     ) {
         console.log('arrive: ' + nickName)
         let io = this.io
@@ -26,11 +27,12 @@ class roomClass {
         let n = io.nsps['/'].adapter.rooms[this.name].length
         console.log('n = ' + n)
         if ((this.maxCapacity > 0) && (n >= this.maxCapacity)) {
-          //io.to(this.name).emit('roomfull', {roomName:this.name, roomid:this.id})
-          this.isFull = true
+            //io.to(this.name).emit('roomfull', {roomName:this.name, roomid:this.id})
+            this.isFull = true
         }
         return this
     }
+    
     leave(
         socket
     ) {

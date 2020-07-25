@@ -4,21 +4,21 @@
   "description": "app for the 3-player dominoes game MOON",
   "main": "index.js",
   "scripts": {
-      "build": "echo \"No build script\" && exit 0",
-      "start": "node ./mainServer.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo \"No build script\" && exit 0",
+    "start": "node ./mainServer.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ed Carstens",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "cookie-parser": "^1.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "debug": "^4.1.1",
-    "express": "^4.16.4",
+    "express": "^4.17.1",
     "http": "0.0.0",
-    "morgan": "^1.9.1",
+    "morgan": "^1.10.0",
     "node-sass-middleware": "^0.11.0",
-    "pug": "^2.0.3",
-    "socket.io": "^2.2.0"
+    "pug": "^3.0.0",
+    "socket.io": "^2.3.0"
   }
 }
