@@ -4,3 +4,7 @@ export FAST_INSTALL_PATH=/c/fast
 
 # For debugging the app use local port (http://localport:5000)
 export PORT=5000
+
+alias python=/c/Python27/python
+alias gs='git st'
+alias lsl='ls -lart'

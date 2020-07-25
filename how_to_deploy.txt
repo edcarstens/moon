@@ -1,1 +1,6 @@
 heroku.com is where I go to deploy this app
+
+heroku help
+
+To update an app
+git push heroku master
