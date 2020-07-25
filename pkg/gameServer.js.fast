@@ -5,7 +5,7 @@ FAST Template for gameServer.js
 -------------------------------
 
 //.#gameServer = SectionJs('gameServer')
-//.gameServer = secjs.gameServer('gameServer.js')
+//.gameServer = secjs.gameServer('gameServerClass.js')
 //.gameServer.bone = Opov('bone')
 //.gameServer.maxBone = Opov('maxBone')
 //.gameServer.minBone = Opov('minBone')
@@ -26,16 +26,16 @@ class gameServerClass {
     }
     //.-this.c
 
-    //.+this.start
-    ({
-    }) {
+    //.+this.start()
+    (
+    ) {
         let io = this.io;
         console.log('moon game server starting..');
         // Never use 'this' keyword in callbacks
     }
     //.-this.start
 
-    //.+this.emitUntilAckOrTimeout
+    //.+this.emitUntilAckOrTimeout()
     a(
         player,
         data,
@@ -58,7 +58,7 @@ class gameServerClass {
     }
     //.-this.emitUntilAckOrTimeout
 
-    //.+this.emitUntilAck
+    //.+this.emitUntilAck()
     a(
         player,
         data,
@@ -76,7 +76,7 @@ class gameServerClass {
     }
     //.-this.emitUntilAck
 
-    //.+this.getPlayerResponse
+    //.+this.getPlayerResponse()
     a(
         player,
         timeout,
@@ -98,7 +98,7 @@ class gameServerClass {
     }
     //.-this.getPlayerResponse
 
-    //.+this.playerTurn
+    //.+this.playerTurn()
     a(
         player,
         data,
@@ -130,7 +130,7 @@ class gameServerClass {
     }
     //.-this.playerTurn
     
-    //.+this.drawForShake
+    //.+this.drawForShake()
     a(
         room,
     ) {
@@ -165,7 +165,7 @@ class gameServerClass {
     }
     //.-this.drawForShake
 
-    //.+this.ack
+    //.+this.ack()
     (
         data,
     ) {
@@ -174,7 +174,7 @@ class gameServerClass {
     }
     //.-this.ack
     
-    //.+this.trick
+    //.+this.trick()
     a(
         room,
         players,
@@ -230,8 +230,8 @@ class gameServerClass {
     }
     //.-this.trick
 
-    //.+this.getStats
-    a(
+    //.+this.getStats()
+    (
         players,
     ) {
         let stats = {}
@@ -251,7 +251,7 @@ class gameServerClass {
     }
     //.-this.getStats
     
-    //.+this.firstValidPlay
+    //.+this.firstValidPlay()
     a(
         bones,
     ) {
@@ -266,7 +266,7 @@ class gameServerClass {
     }
     //.-this.firstValidPlay
 
-    //.+this.bestValidPlay
+    //.+this.bestValidPlay()
     a(
         data,
     ) {
@@ -337,7 +337,7 @@ class gameServerClass {
     }
     //.-this.bestValidPlay
 
-    //.+this.firstFacedown
+    //.+this.firstFacedown()
     a(
         bones,
     ) {
@@ -352,7 +352,7 @@ class gameServerClass {
     }
     //.-this.firstFacedown
     
-    //.+this.firstFacedown7
+    //.+this.firstFacedown7()
     a(
         bones,
     ) {
@@ -372,7 +372,7 @@ class gameServerClass {
     }
     //.-this.firstFacedown7
 
-    //.+this.delay
+    //.+this.delay()
     a(
         time,
     ) {
@@ -380,7 +380,7 @@ class gameServerClass {
     }
     //.-this.delay
 
-    //.+this.moonBot
+    //.+this.moonBot()
     a(
         data,
     ) {
@@ -419,7 +419,7 @@ class gameServerClass {
     }
     //.-this.moonBot
     
-    //.+this.playHand
+    //.+this.playHand()
     a(
         room,
         shaker,
@@ -506,8 +506,8 @@ class gameServerClass {
     }
     //.-this.playHand
 
-    //.+this.haltGame
-    a(
+    //.+this.haltGame()
+    (
         x,
     ) {
         console.log('Error - haltGame function should be overridden')
@@ -515,7 +515,7 @@ class gameServerClass {
     }
     //.-this.haltGame
     
-    //.+this.playMoon
+    //.+this.playMoon()
     a(
         room,
     ) {

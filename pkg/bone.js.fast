@@ -9,7 +9,7 @@ FAST Template for boneClass.js
 
 //.+bone
 class boneClass {
-    //.+bone.c
+    //.+bone.c()
     (
         boneStr,
     ) {
@@ -33,7 +33,7 @@ class boneClass {
     }
     //.-bone.c
 
-    //.+bone.setTrump
+    //.+bone.setTrump()
     (
         trump,
     ) {
@@ -41,7 +41,7 @@ class boneClass {
     }
     //.-bone.setTrump
 
-    //.+bone.setSuit
+    //.+bone.setSuit()
     (
         suit,
     ) {
@@ -49,7 +49,7 @@ class boneClass {
     }
     //.-bone.setSuit
 
-    //.+bone.value
+    //.+bone.value()
     (
     ) {
         if ((this.trump < 0) || (this.suit < 0)) {
@@ -85,29 +85,29 @@ class boneClass {
     }
     //.-bone.value
         
-    //.+bone.js__gt__
+    //.+bone.ov_gt()
     (
         other,
     ) {
         return (this.value() > other.value())
     }
-    //.-bone.js__gt__
+    //.-bone.ov_gt
 
-    //.+bone.js__lt__
+    //.+bone.ov_lt()
     (
         other,
     ) {
         return (this.value() < other.value())
     }
-    //.-bone.js__lt__
+    //.-bone.ov_lt
     
-    //.+bone.js__eq__
+    //.+bone.ov_eq()
     (
         other,
     ) {
         return (this.value() == other.value())
     }
-    //.-bone.js__eq__
+    //.-bone.ov_eq
 
     //.bone > 'body'
 }

@@ -12,6 +12,8 @@ Loading templates..
 ///fast.include('gameServer.js.fast')
 ///fast.include('room.js.fast')
 ///fast.include('gameroom.js.fast')
+
+///## In progress.. diffing with moon2 (generated from pet)
 ///fast.include('clerk.js.fast')
 ///fast.include('gameclerk.js.fast')
 ///fast.include('layout.pug.fast')
@@ -21,14 +23,14 @@ Loading templates..
 ///fast.include('moon.js.fast')
 ///fast.include('bone.js.fast')
 ///fast.include('bones.js.fast')
-///#fast.include('bid.js.fast')
-///#fast.include('call.js.fast')
-///#fast.include('shake.js.fast')
-///#fast.include('player.js.fast')
-///#fast.include('play.js.fast')
-///#fast.include('draw.js.fast')
-///#fast.include('discard.js.fast')
-///#fast.include('playWithBots.js.fast')
+///fast.include('bid.js.fast')
+///fast.include('call.js.fast')
+///fast.include('shake.js.fast')
+///fast.include('player.js.fast')
+///fast.include('play.js.fast')
+///fast.include('draw.js.fast')
+///fast.include('discard.js.fast')
+///fast.include('playWithBots.js.fast')
 
 Adding features..
 
@@ -47,22 +49,14 @@ Adding features..
 //.addMoon()
 //.addBone()
 //.addBones()
-
-//.#gameServer(mainServer, moon)
-//.#playWithBots(index, moon, mainServer, clerk)
-//.#gameroom(mainServer)
-//.#gameclerk(mainServer)
-//.#index(main)
-//.#moon(layout, index, main)
-//.#main(layout) # client
-//.#bones(layout, index, gameServer, moon)
-//.#bid(index, moon, gameServer)
-//.#call(index, moon, gameServer)
-//.#shake(moon, gameServer)
-//.#player(mainServer)
-//.#play(moon)
-//.#draw(moon)
-//.#discard(moon)
+//.addBid()
+//.addCall()
+//.addShake()
+//.addPlayer()
+//.addPlay()
+//.addDraw()
+//.addDiscard()
+//.addPlayWithBots()
 
 Writing template files..
 //.# Write Template Files

@@ -8,7 +8,7 @@
 //.this = +clerk
 let roomClass = require('./roomClass')
 class clerkClass {
-    //.+this.c
+    //.+this.c()
     (
         io,
         clientsPerRoom,
@@ -20,7 +20,7 @@ class clerkClass {
     }
     //.-this.c
 
-    //.+this.newRoom
+    //.+this.newRoom()
     (
         roomId,
     ) {
@@ -28,7 +28,7 @@ class clerkClass {
     }
     //.-this.newRoom
 
-    //.+this.getVacancies
+    //.+this.getVacancies()
     (
     ) {
         let rv = {vacancies:{}}
@@ -47,7 +47,7 @@ class clerkClass {
     }
     //.-this.getVacancies
 
-    //.+this.arrive
+    //.+this.arrive()
     (
         socket,
         inData,
@@ -101,7 +101,7 @@ class clerkClass {
     }
     //.-this.arrive
 
-    //.+this.leave
+    //.+this.leave()
     (
         socket,
     ) {
@@ -123,7 +123,7 @@ class clerkClass {
     }
     //.-this.leave
 
-    //.+this.removeVacancies
+    //.+this.removeVacancies()
     (
         x,
     ) {

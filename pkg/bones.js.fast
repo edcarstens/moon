@@ -85,43 +85,43 @@ var temporaryValue, randomIndex
 //.-gameServer.shuffle.let
 
 //.+gameServer.body
-//.+gameServer.shuffle
+//.+gameServer.shuffle()
 (
     array,
 ) {
     //.gameServer.shuffle.let > ''
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-	// Pick a remaining element...
-	randomIndex = Math.floor(Math.random() * currentIndex)
-	currentIndex -= 1
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex -= 1
         
-	// And swap it with the current element.
-	temporaryValue = array[currentIndex]
-	array[currentIndex] = array[randomIndex]
-	array[randomIndex] = temporaryValue
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex]
+        array[currentIndex] = array[randomIndex]
+        array[randomIndex] = temporaryValue
     }
     return array
 }
 //.-gameServer.shuffle
 
-//.+gameServer.findKitty
+//.+gameServer.findKitty()
 a(
     socketId,
 ) {
     for (let bone of this.bonepool) {
         if (!bone.faceup) {
-	    console.log(bone)
-	    bone.owner = socketId
-	    bone.faceup = true
-	    return bone
+            console.log(bone)
+            bone.owner = socketId
+            bone.faceup = true
+            return bone
         }
     } // for
     // TODO: raise or throw an error here
 }
 //.-gameServer.findKitty
 
-//.+gameServer.sendBone
+//.+gameServer.sendBone()
 (
     boneId,
 ) {
@@ -138,7 +138,7 @@ a(
 }
 //.-gameServer.sendBone
 
-//.+gameServer.sendBonePool
+//.+gameServer.sendBonePool()
 (
     socketId="",
     first=true,
@@ -148,89 +148,89 @@ a(
     if (first) {
         console.log('Calculating valid first plays..')
         for (bone of this.bonepool) {
-	    if ((bone.owner == socketId) && (! bone.trick)) {
-	        console.log(`Bone ${bone.boneStr} is valid`)
-	        bone.valid = true
-	        bone.trump = this.call
-	    }
-	    else {
-	        bone.valid = false
-	    }
+            if ((bone.owner == socketId) && (! bone.trick)) {
+                console.log(`Bone ${bone.boneStr} is valid`)
+                bone.valid = true
+                bone.trump = this.call
+            }
+            else {
+                bone.valid = false
+            }
         }
     }
     else {
         console.log('Calculating valid plays..')
         for (bone of this.bonepool) {
-	    bone.trump = this.call
-	    if ((bone.owner == socketId) && (! bone.trick)) {
-	        console.log('Bone ' + bone.boneStr)
-	        if (bone.trump == this.suit) {
-		    if (bone.suits[this.suit]) {
-		        bone.valid = true
-		        nvalid++
-		        console.log('This one follows the trump suit.')
-		    }
-		    else {
-		        bone.valid = false
-		    }
-	        }
-	        else if (bone.suits[this.suit] && ((bone.trump == 8) || (! bone.suits[bone.trump]))) {
-		    bone.valid = true
-		    nvalid++
-		    console.log('This one follows suit.')
-	        }
-	        else {
-		    bone.valid = false
-	        }
-	    }
-	    else {
-	        bone.valid = false
-	    }
+            bone.trump = this.call
+            if ((bone.owner == socketId) && (! bone.trick)) {
+                console.log('Bone ' + bone.boneStr)
+                if (bone.trump == this.suit) {
+                    if (bone.suits[this.suit]) {
+                        bone.valid = true
+                        nvalid++
+                        console.log('This one follows the trump suit.')
+                    }
+                    else {
+                        bone.valid = false
+                    }
+                }
+                else if (bone.suits[this.suit] && ((bone.trump == 8) || (! bone.suits[bone.trump]))) {
+                    bone.valid = true
+                    nvalid++
+                    console.log('This one follows suit.')
+                }
+                else {
+                    bone.valid = false
+                }
+            }
+            else {
+                bone.valid = false
+            }
         }
         if (! nvalid) {
-	    for (bone of this.bonepool) {
-	        if ((bone.owner == socketId) && (! bone.trick)) {
-		    bone.valid = true
-	        }
-	    }
+            for (bone of this.bonepool) {
+                if ((bone.owner == socketId) && (! bone.trick)) {
+                    bone.valid = true
+                }
+            }
         }
     }
     return this.bonepool.map((x) => {
         let rv = {
-	    faceup: x.faceup,
-	    owner: x.owner,
-	    trick: x.trick,
-	    boneStr: x.boneStr,
-	    played: x.played,
-	    discarded: x.discarded,
-	    trump: x.trump,
-	    valid: x.valid
+            faceup: x.faceup,
+            owner: x.owner,
+            trick: x.trick,
+            boneStr: x.boneStr,
+            played: x.played,
+            discarded: x.discarded,
+            trump: x.trump,
+            valid: x.valid
         }
         // hide owner if face down or not owned by you
         if (!rv.faceup) {
-	    rv.owner = ''
+            rv.owner = ''
         }
         else if (x.owner && (x.owner != socketId)) {
-	    rv.owner = '-'
-	    rv.boneStr = ''
+            rv.owner = '-'
+            rv.boneStr = ''
         }
         return rv
     })
 }
 //.-gameServer.sendBonePool
 
-//.+gameServer._remapSocketId
+//.+gameServer._remapSocketId()
 (
 ) {
     for (let bone of this.bonepool) {
         if (this.replaceSocketMap.has(bone.owner)) {
-	    bone.owner = this.replaceSocketMap.get(bone.owner)
+            bone.owner = this.replaceSocketMap.get(bone.owner)
         }
     }
 }
 //.-gameServer._remapSocketId
 
-//.+gameServer.remapSocketId
+//.+gameServer.remapSocketId()
 (
     oldSocketId,
     newSocketId,
@@ -239,7 +239,7 @@ a(
 }
 //.-gameServer.remapSocketId
 
-//.+gameServer.shakeBones
+//.+gameServer.shakeBones()
 (
     seed=@nbones@,
 ) {
@@ -301,43 +301,43 @@ $('#btnBone@i@').on('click', function() {
 //})
 //. }
 class bonesClass {
-    //.+bones.c
+    //.+bones.c()
     (
     ) {
         this.pool = []   // array of shuffled dominoes
         this.bonepoolMoon = [  // complete pool of 22 dominoes for MOON (const)
-	    '00', // '01','02','03','04','05','06',
-	    '11','12','13','14','15','16',
-	    '22','23','24','25','26',
-	    '33','34','35','36',
-	    '44','45','46',
-	    '55','56',
-	    '66'
+            '00', // '01','02','03','04','05','06',
+            '11','12','13','14','15','16',
+            '22','23','24','25','26',
+            '33','34','35','36',
+            '44','45','46',
+            '55','56',
+            '66'
         ]
         this.x = [
-	    //.bones.chomp > 'x_coords'
+            //.bones.chomp > 'x_coords'
         ]
         this.y = [
             //.bones.chomp > 'y_coords'
-        ]	
+        ]       
         this.faceup = {}
         let bone = {faceup:false, owner:'', boneStr:''}
         for (let i=0; i<this.bonepoolMoon.length; i++) {
-	    this.pool.push(bone)
-	    this.faceup[this.bonepoolMoon[i]] = false
-	    $('#tile' + this.bonepoolMoon[i]).on('click', () => {
-	        moon._boneClicked(moon.clickBoneId[this.bonepoolMoon[i]])
-	    })
+            this.pool.push(bone)
+            this.faceup[this.bonepoolMoon[i]] = false
+            $('#tile' + this.bonepoolMoon[i]).on('click', () => {
+                moon._boneClicked(moon.clickBoneId[this.bonepoolMoon[i]])
+            })
         }
     }
     //.-bones.c
 
-    //.+bones.display
+    //.+bones.display()
     (
         enabled,
     ) {
         for (let k in this.faceup) {
-	    this.faceup[k] = false
+            this.faceup[k] = false
         }
         let x = 320
         let y = 720
@@ -345,79 +345,80 @@ class bonesClass {
         let y2 = [0,160,160,160,160,160,160,160]
         let y3 = 400
         for (let i=0; i<this.pool.length; i++) {
-	    let bone = this.pool[i]
-	    if (bone.faceup) {
-	        $('#btnBone' + i).hide()
-	        $('#btnBone' + i).prop("disabled",true)
-	        if (bone.owner == '') {
-		    this.faceup[bone.boneStr] = true
-		    if (bone.played) {
-		        $('#tile' + bone.boneStr).css("left",400)
-		        $('#tile' + bone.boneStr).css("top",y3)
-		        y3 += 60
-		    }
-		    else {
-		        $('#tile' + bone.boneStr).css("left",$('#btnBone' + i).css("left"))
-		        $('#tile' + bone.boneStr).css("top",$('#btnBone' + i).css("top"))
-		    }
-		    moon.clickBoneId[bone.boneStr] = -3 // signals illegal play
-	        }
-	        else if (bone.owner == moon.socket.id) {
-		    //console.log(`${bone.boneStr} matches owner`)
-		    //console.log(bone.owner)
-		    //console.log(moon.socket.id)
-		    this.faceup[bone.boneStr] = true
-		    if (bone.trick) {
-		        $('#tile' + bone.boneStr).css("left",x2 + bone.trick*100)
-		        $('#tile' + bone.boneStr).css("top",y2[bone.trick])
-		        y2[bone.trick] += 60
-		        moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
-		    }
-		    else {
-		        $('#tile' + bone.boneStr).css("left",x)
-		        $('#tile' + bone.boneStr).css("top",y)
-		        if (bone.valid) {
-			    moon.clickBoneId[bone.boneStr] = i
-			    $('#tile' + bone.boneStr).show()
-		        }
-		        else {
-			    moon.clickBoneId[bone.boneStr] = -1 // signals illegal play
-		        }
-		        x += 120
-		        if ((y == 720) && (x > 560)) {
-			    x = 260
-			    y += 70
-		        }
-		    }
-	        }
-	    }
-	    else {
-	        if (bone.discarded) {
-		    $('#btnBone' + i).show()
-		    $('#btnBone' + i).prop("disabled",true)
-		    $('#btnBone' + i).css("left", 700)
-		    $('#btnBone' + i).css("top", 400)	
-	        }
-	        else {
-		    $('#btnBone' + i).show()
-		    $('#btnBone' + i).prop("disabled",!enabled)
-		    $('#btnBone' + i).css("left", this.x[i])
-		    $('#btnBone' + i).css("top", this.y[i])
-	        }
-	    }
+            let bone = this.pool[i]
+            if (bone.faceup) {
+                $('#btnBone' + i).hide()
+                $('#btnBone' + i).prop("disabled",true)
+                if (bone.owner == '') {
+                    this.faceup[bone.boneStr] = true
+                    if (bone.played) {
+                        $('#tile' + bone.boneStr).css("left",400)
+                        $('#tile' + bone.boneStr).css("top",y3)
+                        y3 += 60
+                    }
+                    else {
+                        $('#tile' + bone.boneStr).css("left",$('#btnBone' + i).css("left"))
+                        $('#tile' + bone.boneStr).css("top",$('#btnBone' + i).css("top"))
+                    }
+                    moon.clickBoneId[bone.boneStr] = -3 // signals illegal play
+                }
+                else if (bone.owner == moon.socket.id) {
+                    //console.log(`${bone.boneStr} matches owner`)
+                    //console.log(bone.owner)
+                    //console.log(moon.socket.id)
+                    this.faceup[bone.boneStr] = true
+                    if (bone.trick) {
+                        $('#tile' + bone.boneStr).css("left",x2 + bone.trick*100)
+                        $('#tile' + bone.boneStr).css("top",y2[bone.trick])
+                        y2[bone.trick] += 60
+                        moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
+                    }
+                    else {
+                        $('#tile' + bone.boneStr).css("left",x)
+                        $('#tile' + bone.boneStr).css("top",y)
+                        if (bone.valid) {
+                            moon.clickBoneId[bone.boneStr] = i
+                            $('#tile' + bone.boneStr).show()
+                        }
+                        else {
+                            moon.clickBoneId[bone.boneStr] = -1 // signals illegal play
+                        }
+                        x += 120
+                        if ((y == 720) && (x > 560)) {
+                            x = 260
+                            y += 70
+                        }
+                    }
+                }
+            }
+            else {
+                if (bone.discarded) {
+                    $('#btnBone' + i).show()
+                    $('#btnBone' + i).prop("disabled",true)
+                    $('#btnBone' + i).css("left", 700)
+                    $('#btnBone' + i).css("top", 400)   
+                }
+                else {
+                    $('#btnBone' + i).show()
+                    $('#btnBone' + i).prop("disabled",!enabled)
+                    $('#btnBone' + i).css("left", this.x[i])
+                    $('#btnBone' + i).css("top", this.y[i])
+                }
+            }
         }
         for (let k in this.faceup) {
-	    if (this.faceup[k]) {
-	        $('#tile' + k).show()
-	    }
-	    else {
-	        $('#tile' + k).hide()
-	    }
+            if (this.faceup[k]) {
+                $('#tile' + k).show()
+            }
+            else {
+                $('#tile' + k).hide()
+            }
         }
     }
     //.-bones.display
 
     //.bones > 'body'
+
 } // class
 var bones = new bonesClass()
 //.-bones

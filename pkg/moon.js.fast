@@ -37,7 +37,7 @@ else if (@self.cond@) {
 //.def addMoon():{
 Adding moon ..    
 //. +layout.scripts
-script(src='javascripts/moon.js')
+script(src='javascripts/moon.js' type="module")
 //. -layout.scripts
 //. +index.block_content
 //.+fast
@@ -52,6 +52,8 @@ button#btnRoom@i@(class="w3-button w3-green w3-border w3-hover-blue w3-text-blac
 //.-fast
 //. -index.block_content
 //. +main.body
+let moonClass = await import('javascripts/moon')
+let moon = moonClass()
 console.log('Welcome to MOON')
 moon.init(
     //.+moon.initCallArgs
@@ -64,8 +66,9 @@ moon.start()
     
 //.+moon
 class moonClass {
+    //.#moon.classvars = Section('moon classvars', moon)
     //.moon.classvars > ''
-    //.+moon.c
+    //.+moon.c()
     (
         player='',
         state=null,
@@ -87,7 +90,7 @@ class moonClass {
     }
     //.-moon.c
 
-    //.+moon.gotoLogin
+    //.+moon.gotoLogin()
     (
     ) {
         $('#btnRoom1').show()
@@ -101,7 +104,7 @@ class moonClass {
     }
     //.-moon.gotoLogin
 
-    //.+moon.init
+    //.+moon.init()
     (
         socket,
     ) {
@@ -110,7 +113,7 @@ class moonClass {
     }
     //.-moon.init
 
-    //.+moon.clickPlay
+    //.+moon.clickPlay()
     a(
     ) {
         let plist = []
@@ -121,11 +124,11 @@ class moonClass {
                 })
             }) )
         } // for i
+        return Promise.race(plist)
     }
-    return Promise.race(plist)
     //.-moon.clickPlay
 
-    //.+moon.clickSend
+    //.+moon.clickSend()
     a(
     ) {
         return new Promise( (resolve, reject) => {
@@ -136,7 +139,7 @@ class moonClass {
     }
     //.-moon.clickSend
 
-    //.+moon.boneClickedOrBot
+    //.+moon.boneClickedOrBot()
     a(
     ) {
         let p1 = new Promise( (resolve, reject) => {
@@ -153,7 +156,7 @@ class moonClass {
     }
     //.-moon.boneClickedOrBot
 
-    //.+moon.boneClicked
+    //.+moon.boneClicked()
     a(
     ) {
         let {boneId} = await this.boneClickedOrBot()
@@ -161,7 +164,7 @@ class moonClass {
     }
     //.-moon.boneClicked
 
-    //.+moon.rxRoom
+    //.+moon.rxRoom()
     a(
     ) {
         return new Promise( (resolve, reject) => {
@@ -172,7 +175,7 @@ class moonClass {
     }
     //.-moon.rxRoom
 
-    //.+moon.waitForStart
+    //.+moon.waitForStart()
     a(
     ) {
         return new Promise( (resolve, reject) => {
@@ -183,7 +186,7 @@ class moonClass {
     }
     //.-moon.waitForStart
 
-    //.+moon.myTurn
+    //.+moon.myTurn()
     a(
     ) {
         return new Promise( (resolve, reject) => {
@@ -197,7 +200,7 @@ class moonClass {
     }
     //.-moon.myTurn
 
-    //.+moon.delay
+    //.+moon.delay()
     a(
         time,
     ) {
@@ -205,7 +208,7 @@ class moonClass {
     }
     //.-moon.delay
 
-    //.+moon.start
+    //.+moon.start()
     a(
     ) {
         let data, bone, boneId
@@ -276,6 +279,7 @@ class moonClass {
         console.log(`You get ${moon.room}`)
         $('#message').html('<b>Waiting For Players..</b>')
         $('#message').show()
+        //.#moon.start1 = Section('start1',moon)
         //.moon > 'start1'
         moon.socket.on('drewbone', (data) => {
             console.log(`Player ${data.player} drew bone ${data.boneStr}`)
@@ -321,14 +325,16 @@ class moonClass {
             //done = (data.cmd == 'shake')
             $('#suit').hide()
             $('#trump').hide()
-            //.moon > 'cmds'
+            switch (cmds) {
+                //.moon > 'cmds'
+            }
             console.log('done')
         }
         return 0
     }
     //.-moon.start
 
-    //.+moon.limit
+    //.+moon.limit()
     (
         s,
         lim,
@@ -341,7 +347,7 @@ class moonClass {
     }
     //.-moon.limit
 
-    //.+moon.displayStats
+    //.+moon.displayStats()
     (
         stats,
     ) {
@@ -366,7 +372,7 @@ class moonClass {
     }
     //.-moon.displayStats
 
-    //.+moon.displaySuit
+    //.+moon.displaySuit()
     (
         maxBone,
     ) {
@@ -393,7 +399,7 @@ class moonClass {
     }
     //.-moon.displaySuit
 
-    //.+moon.displayTrump
+    //.+moon.displayTrump()
     (
         trump,
     ) {
@@ -419,8 +425,9 @@ class moonClass {
 
 }
 
-module.exports = moonClass
-
+//module.exports = moonClass
+export default moonClass
+    
 //.-moon
 
 //.} # def addMoon

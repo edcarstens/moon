@@ -23,7 +23,7 @@ window.addEventListener("load", function() {
     }, 0);
 });
 
-//.#  main > 'body'
+//.main > 'body'
 
 //.-main
 

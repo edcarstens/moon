@@ -1,25 +1,35 @@
 //.#-*-Javascript-*-
-//.+pet
-PET Template for playerClass.js
--------------------------------
+//.+fast
+FAST Template for playerClass.js
+--------------------------------
 
-//.class playerClass(templatejs):{
-//. def add(self, mainServer):{
-//.  mainServer < 'let'
+//.player = secjs.player('playerClass.js')
+
+//.def addPlayer():{
+
+//.+mainServer.let
 let playerClass = require('./playerClass')
-//. }
-//. def output(self):{
+//.-mainServer.let
+
+//.+player
 class playerClass {
-    //.+self.init('socket', 'nickName')
-    this.bid = 0
-    this.tricks = 0
-    this.score = 0
-    this.wins = 0
-    this.idx = 0
-    //.-self.init
+    //.+player.c()
+    (
+        socket=null,
+        nickName="",
+    ) {
+        this.bid = 0
+        this.tricks = 0
+        this.score = 0
+        this.wins = 0
+        this.idx = 0
+        //.player.c > 'body'
+    }
+    //.-player.c
 }
 module.exports = playerClass
-//. }
-//.}
-//.player = playerClass('playerClass.js', '')
-//.-pet
+//.-player
+
+//.} # def addPlayer
+
+//.-fast
