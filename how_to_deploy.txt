@@ -1,1 +1,4 @@
 heroku.com is where I go to deploy this app
+
+CLI
+git push heroku master
