@@ -1,11 +1,11 @@
 //.#-*-Javascript-*-
-//.+pet
-PET Feature: Play one domino
-----------------------------
+//.+fast
+FAST Feature: Play one domino
+-----------------------------
 
-//.class playClass(feature):{
-//. def add(self, moon):{
-//.+moon.case("data.cmd == 'play'")
+//.def addPlay():{
+
+//.+moon.case('play')
 bones.pool = data.bones
 //console.log(data.stats)
 bones.display(true)
@@ -40,7 +40,6 @@ moon.socket.emit('done', {boneId})
 $('#message').hide()
 //.-moon.case
 
-//. } # def add
-//.} # class
-//.play = playClass()
-//.-pet
+//.} # def addPlay
+
+//.-fast

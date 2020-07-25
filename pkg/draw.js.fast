@@ -1,11 +1,11 @@
 //.#-*-Javascript-*-
-//.+pet
-PET Feature: Draw domino(s)
----------------------------
+//.+fast
+FAST Feature: Draw domino(s)
+----------------------------
 
-//.class drawClass(feature):{
-//. def add(self, moon):{
-//.+moon.case("data.cmd == 'draw'")
+//.def addDraw():{
+
+//.+moon.case('draw')
 bones.pool = data.bones
 bones.display(true)
 $('#message').html(`<b>Draw one domino</b>`)
@@ -19,7 +19,8 @@ moon._boneClicked = (boneId) => boneId
 moon.socket.emit('done', {boneId})
 $('#message').hide()
 //.-moon.case
-//.+moon.case("data.cmd == 'draw7'")
+
+//.+moon.case('draw7')
 //console.log(data.bones)
 bones.pool = data.bones
 //console.log(bones.pool)
@@ -54,7 +55,6 @@ bones.display(false)
 $('#message').hide()
 //.-moon.case
 
-//. } # def add
-//.} # class
-//.draw = drawClass()
-//.-pet
+//.} # def addDraw
+
+//.-fast

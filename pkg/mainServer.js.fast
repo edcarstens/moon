@@ -1,10 +1,13 @@
 //.#-*-Javascript-*-
-//.+pet
-PET Template for mainServer.js
-------------------------------
+//.+fast
+FAST Template for mainServer.js
+-------------------------------
 
-//.class mainServerClass(templatejs):{
-//. def output(self):{
+//.#mainServer = Section('mainServer')
+//.mainServer = sec.mainServer('mainServer.js')
+
+//.def addMainServer():{
+//.+mainServer
 #!/usr/bin/env node
 
 /**
@@ -33,8 +36,8 @@ var io = require('socket.io')(server);
 /**
  * Integrate the game server.
  */
-//.self > 'let'
-//.self > 'body'
+//.mainServer > 'let'
+//.mainServer > 'body'
 console.log('mainServer finished integrating game server')
 
 /**
@@ -110,9 +113,7 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-//. }
+//.-mainServer
 //.}
 
-//.mainServer = mainServerClass('mainServer.js', '')
-
-//.-pet
+//.-fast

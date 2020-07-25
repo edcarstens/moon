@@ -18,6 +18,8 @@ for (let i=0; i<3; i++) {
     //$('#btnRoom' + i).css("top", height/2 - 50 + 70);
     $('#btnRoom' + i).css("top", 70);
 }
+let moonClass = await import('javascripts/moon')
+let moon = moonClass()
 console.log('Welcome to MOON')
 moon.init(
     socket

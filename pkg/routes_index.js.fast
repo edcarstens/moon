@@ -1,0 +1,23 @@
+//.#-*-Javascript-*-
+//.+fast
+FAST Template for routes/index.js
+---------------------------------
+
+//.#routesIndex = Section('routesIndex')
+//.routesIndex = sec.routesIndex('routes/index.js')
+
+//.def addRoutesIndex():{
+//.+routesIndex
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'MOON' });
+});
+
+module.exports = router;
+//.-routesIndex
+//.}
+
+//.-fast

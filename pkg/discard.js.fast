@@ -1,11 +1,10 @@
 //.#-*-Javascript-*-
-//.+pet
-PET Feature: Discard one domino
--------------------------------
+//.+fast
+FAST Feature: Discard one domino
+--------------------------------
 
-//.class discardClass(feature):{
-//. def add(self, moon):{
-//.+moon.case("data.cmd == 'discard'")
+//.def addDiscard():{
+//.+moon.case('discard')
 // let player discard a domino (with the kitty)
 //console.log('Discarding -- click on one domino')
 bones.pool = data.bones
@@ -24,7 +23,6 @@ moon._boneClicked = (boneId) => boneId
 $('#message').hide()
 //.-moon.case
 
-//. } # def add
-//.} # class
-//.discard = discardClass()
-//.-pet
+//.} # def addDiscard
+
+//.-fast

@@ -1,0 +1,35 @@
+//.#-*-Javascript-*-
+//.+fast
+FAST Template for playerClass.js
+--------------------------------
+
+//.player = secjs.player('playerClass.js')
+
+//.def addPlayer():{
+
+//.+mainServer.let
+let playerClass = require('./playerClass')
+//.-mainServer.let
+
+//.+player
+class playerClass {
+    //.+player.c()
+    (
+        socket=null,
+        nickName="",
+    ) {
+        this.bid = 0
+        this.tricks = 0
+        this.score = 0
+        this.wins = 0
+        this.idx = 0
+        //.player.c > 'body'
+    }
+    //.-player.c
+}
+module.exports = playerClass
+//.-player
+
+//.} # def addPlayer
+
+//.-fast
