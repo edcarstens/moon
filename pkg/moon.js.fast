@@ -37,7 +37,7 @@ else if (@self.cond@) {
 //.def addMoon():{
 Adding moon ..    
 //. +layout.scripts
-script(src='javascripts/moon.js' type="module")
+script(src='javascripts/moon.js')
 //. -layout.scripts
 //. +index.block_content
 //.+fast
@@ -52,8 +52,8 @@ button#btnRoom@i@(class="w3-button w3-green w3-border w3-hover-blue w3-text-blac
 //.-fast
 //. -index.block_content
 //. +main.body
-let moonClass = await import('javascripts/moon')
-let moon = moonClass()
+//let moonClass = import('javascripts/moon')
+let moon = new moonClass()
 console.log('Welcome to MOON')
 moon.init(
     //.+moon.initCallArgs
@@ -67,7 +67,7 @@ moon.start()
 //.+moon
 class moonClass {
     //.#moon.classvars = Section('moon classvars', moon)
-    //.moon.classvars > ''
+    //.#moon.classvars > ''
     //.+moon.c()
     (
         player='',
@@ -325,7 +325,7 @@ class moonClass {
             //done = (data.cmd == 'shake')
             $('#suit').hide()
             $('#trump').hide()
-            switch (cmds) {
+            switch (data.cmd) {
                 //.moon > 'cmds'
             }
             console.log('done')
@@ -426,7 +426,7 @@ class moonClass {
 }
 
 //module.exports = moonClass
-export default moonClass
+//export default moonClass
     
 //.-moon
 

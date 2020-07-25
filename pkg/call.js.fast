@@ -36,8 +36,8 @@ for (let i=0; i<8; i++) {
 //.+moon.case("call")
 $('#message').html(`<b>Call your trump suit</b>`)
 $('#message').show()
-let call
 let choices = data.choices
+let call
 for (let choice in choices) {
     if (choices[choice]) {
 	$('#btnCall' + choice).show()
@@ -74,9 +74,9 @@ a(
 this.call = 'Follow Me'
 //.-gameServer.c.body
     
-//.+moon.classvars
-_callClicked: (call) => call,
-//.-moon.classvars
+//.+moon.c.body
+this._callClicked = (call) => call
+//.-moon.c.body
 
 //.+moon.body
 //.+moon.callClicked()

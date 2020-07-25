@@ -38,8 +38,8 @@ for (let i=0; i<6; i++) {
 //.+moon.case("bid")
 $('#message').html(`<b>State your bid</b>`)
 $('#message').show()
-let bid
 let choices = [true] // pass is always a choice
+let bid
 console.log('Max bid is ' + data.maxBid)
 for (let i=1; i<6; i++) {
     choices.push( (i > data.maxBid) )
@@ -99,9 +99,9 @@ a(
 //.-gameServer.biddingRound
 //.-gameServer.body
 
-//.+moon.classvars
-_bidClicked: (bid) => bid,
-//.-moon.classvars
+//.+moon.c.body
+this._bidClicked = (bid) => bid
+//.-moon.c.body
 
 //.+moon.body
 //.+moon.bidClicked()
