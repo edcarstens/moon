@@ -174,161 +174,161 @@ $('#btnBone21').on('click', function() {
 //    $('#tile66').hide()
 //    moon._boneClicked(21)
 //})
-
 class bonesClass {
     constructor(
     ) {
-            this.pool = []   // array of shuffled dominoes
-            this.bonepoolMoon = [  // complete pool of 22 dominoes for MOON (const)
-        	'00', // '01','02','03','04','05','06',
-        	'11','12','13','14','15','16',
-        	'22','23','24','25','26',
-        	'33','34','35','36',
-        	'44','45','46',
-        	'55','56',
-        	'66'
-            ]
-            this.x = [
-        	320,
-        	440,
-        	560,
-        	200,
-        	320,
-        	440,
-        	560,
-        	680,
-        	140,
-        	260,
-        	380,
-        	500,
-        	620,
-        	740,
-        	200,
-        	320,
-        	440,
-        	560,
-        	680,
-        	320,
-        	440,
-        	560
-            ]
-            this.y = [
-        	270,
-        	270,
-        	270,
-        	340,
-        	340,
-        	340,
-        	340,
-        	340,
-        	410,
-        	410,
-        	410,
-        	410,
-        	410,
-        	410,
-        	480,
-        	480,
-        	480,
-        	480,
-        	480,
-        	550,
-        	550,
-        	550
-            ]	
-            this.faceup = {}
-            let bone = {faceup:false, owner:'', boneStr:''}
-            for (let i=0; i<this.bonepoolMoon.length; i++) {
-        	this.pool.push(bone)
-        	this.faceup[this.bonepoolMoon[i]] = false
-        	$('#tile' + this.bonepoolMoon[i]).on('click', () => {
-        	    moon._boneClicked(moon.clickBoneId[this.bonepoolMoon[i]])
-        	})
-            }
+        this.pool = []   // array of shuffled dominoes
+        this.bonepoolMoon = [  // complete pool of 22 dominoes for MOON (const)
+            '00', // '01','02','03','04','05','06',
+            '11','12','13','14','15','16',
+            '22','23','24','25','26',
+            '33','34','35','36',
+            '44','45','46',
+            '55','56',
+            '66'
+        ]
+        this.x = [
+                320,
+                440,
+                560,
+                200,
+                320,
+                440,
+                560,
+                680,
+                140,
+                260,
+                380,
+                500,
+                620,
+                740,
+                200,
+                320,
+                440,
+                560,
+                680,
+                320,
+                440,
+                560
+        ]
+        this.y = [
+                270,
+                270,
+                270,
+                340,
+                340,
+                340,
+                340,
+                340,
+                410,
+                410,
+                410,
+                410,
+                410,
+                410,
+                480,
+                480,
+                480,
+                480,
+                480,
+                550,
+                550,
+                550
+        ]       
+        this.faceup = {}
+        let bone = {faceup:false, owner:'', boneStr:''}
+        for (let i=0; i<this.bonepoolMoon.length; i++) {
+            this.pool.push(bone)
+            this.faceup[this.bonepoolMoon[i]] = false
+            $('#tile' + this.bonepoolMoon[i]).on('click', () => {
+                moon._boneClicked(moon.clickBoneId[this.bonepoolMoon[i]])
+            })
+        }
     }
 
     display(
         enabled
     ) {
-            for (let k in this.faceup) {
-        	this.faceup[k] = false
+        for (let k in this.faceup) {
+            this.faceup[k] = false
+        }
+        let x = 320
+        let y = 720
+        let x2 = 0
+        let y2 = [0,160,160,160,160,160,160,160]
+        let y3 = 400
+        for (let i=0; i<this.pool.length; i++) {
+            let bone = this.pool[i]
+            if (bone.faceup) {
+                $('#btnBone' + i).hide()
+                $('#btnBone' + i).prop("disabled",true)
+                if (bone.owner == '') {
+                    this.faceup[bone.boneStr] = true
+                    if (bone.played) {
+                        $('#tile' + bone.boneStr).css("left",400)
+                        $('#tile' + bone.boneStr).css("top",y3)
+                        y3 += 60
+                    }
+                    else {
+                        $('#tile' + bone.boneStr).css("left",$('#btnBone' + i).css("left"))
+                        $('#tile' + bone.boneStr).css("top",$('#btnBone' + i).css("top"))
+                    }
+                    moon.clickBoneId[bone.boneStr] = -3 // signals illegal play
+                }
+                else if (bone.owner == moon.socket.id) {
+                    //console.log(`${bone.boneStr} matches owner`)
+                    //console.log(bone.owner)
+                    //console.log(moon.socket.id)
+                    this.faceup[bone.boneStr] = true
+                    if (bone.trick) {
+                        $('#tile' + bone.boneStr).css("left",x2 + bone.trick*100)
+                        $('#tile' + bone.boneStr).css("top",y2[bone.trick])
+                        y2[bone.trick] += 60
+                        moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
+                    }
+                    else {
+                        $('#tile' + bone.boneStr).css("left",x)
+                        $('#tile' + bone.boneStr).css("top",y)
+                        if (bone.valid) {
+                            moon.clickBoneId[bone.boneStr] = i
+                            $('#tile' + bone.boneStr).show()
+                        }
+                        else {
+                            moon.clickBoneId[bone.boneStr] = -1 // signals illegal play
+                        }
+                        x += 120
+                        if ((y == 720) && (x > 560)) {
+                            x = 260
+                            y += 70
+                        }
+                    }
+                }
             }
-            let x = 320
-            let y = 720
-            let x2 = 0
-            let y2 = [0,160,160,160,160,160,160,160]
-            let y3 = 400
-            for (let i=0; i<this.pool.length; i++) {
-        	let bone = this.pool[i]
-        	if (bone.faceup) {
-        	    $('#btnBone' + i).hide()
-        	    $('#btnBone' + i).prop("disabled",true)
-        	    if (bone.owner == '') {
-        		this.faceup[bone.boneStr] = true
-        		if (bone.played) {
-        		    $('#tile' + bone.boneStr).css("left",400)
-        		    $('#tile' + bone.boneStr).css("top",y3)
-        		    y3 += 60
-        		}
-        		else {
-        		    $('#tile' + bone.boneStr).css("left",$('#btnBone' + i).css("left"))
-        		    $('#tile' + bone.boneStr).css("top",$('#btnBone' + i).css("top"))
-        		}
-        		moon.clickBoneId[bone.boneStr] = -3 // signals illegal play
-        	    }
-        	    else if (bone.owner == moon.socket.id) {
-        		//console.log(`${bone.boneStr} matches owner`)
-        		//console.log(bone.owner)
-        		//console.log(moon.socket.id)
-        		this.faceup[bone.boneStr] = true
-        		if (bone.trick) {
-        		    $('#tile' + bone.boneStr).css("left",x2 + bone.trick*100)
-        		    $('#tile' + bone.boneStr).css("top",y2[bone.trick])
-        		    y2[bone.trick] += 60
-        		    moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
-        		}
-        		else {
-        		    $('#tile' + bone.boneStr).css("left",x)
-        		    $('#tile' + bone.boneStr).css("top",y)
-        		    if (bone.valid) {
-        			moon.clickBoneId[bone.boneStr] = i
-        			$('#tile' + bone.boneStr).show()
-        		    }
-        		    else {
-        			moon.clickBoneId[bone.boneStr] = -1 // signals illegal play
-        		    }
-        		    x += 120
-        		    if ((y == 720) && (x > 560)) {
-        			x = 260
-        			y += 70
-        		    }
-        		}
-        	    }
-        	}
-        	else {
-        	    if (bone.discarded) {
-        		$('#btnBone' + i).show()
-        		$('#btnBone' + i).prop("disabled",true)
-        		$('#btnBone' + i).css("left", 700)
-        		$('#btnBone' + i).css("top", 400)	
-        	    }
-        	    else {
-        		$('#btnBone' + i).show()
-        		$('#btnBone' + i).prop("disabled",!enabled)
-        		$('#btnBone' + i).css("left", this.x[i])
-        		$('#btnBone' + i).css("top", this.y[i])
-        	    }
-        	}
+            else {
+                if (bone.discarded) {
+                    $('#btnBone' + i).show()
+                    $('#btnBone' + i).prop("disabled",true)
+                    $('#btnBone' + i).css("left", 700)
+                    $('#btnBone' + i).css("top", 400)   
+                }
+                else {
+                    $('#btnBone' + i).show()
+                    $('#btnBone' + i).prop("disabled",!enabled)
+                    $('#btnBone' + i).css("left", this.x[i])
+                    $('#btnBone' + i).css("top", this.y[i])
+                }
             }
-            for (let k in this.faceup) {
-        	if (this.faceup[k]) {
-        	    $('#tile' + k).show()
-        	}
-        	else {
-        	    $('#tile' + k).hide()
-        	}
+        }
+        for (let k in this.faceup) {
+            if (this.faceup[k]) {
+                $('#tile' + k).show()
             }
+            else {
+                $('#tile' + k).hide()
+            }
+        }
     }
 
-}
+
+} // class
 var bones = new bonesClass()

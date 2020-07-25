@@ -1,21 +1,29 @@
+//.#-*-Javascript-*-
+//.+fast
+
+//.#room = SectionJs('room')
+//.room = secjs.room('roomClass.js')
+
+//.def addRoom():{
+//.this = +room
 class roomClass {
-    constructor(
+    //.+this.c()
+    (
         io,
         id,
-        maxCapacity=0
+        maxCapacity=0,
     ) {
-        this.io = io
-        this.id = id
-        this.maxCapacity = maxCapacity
         this.name = 'room ' + id // room name
         this.sockets = [] // sockets that joined room
         this.n = 0 // current number of occupants
         this.isFull = false
     }
+    //.-this.c
         
-    arrive(
+    //.+this.arrive()
+    (
         socket,
-            nickName
+        nickName
     ) {
         console.log('arrive: ' + nickName)
         let io = this.io
@@ -32,9 +40,11 @@ class roomClass {
         }
         return this
     }
+    //.-this.arrive
     
-    leave(
-        socket
+    //.+this.leave()
+    (
+        socket,
     ) {
         let io = this.io
         let idx
@@ -45,5 +55,12 @@ class roomClass {
         this.sockets.splice(idx, 1)
         return (this.sockets.length > 0)
     }
+    //.-this.leave
 }
 module.exports = roomClass
+
+//.-this
+
+//.} # def addRoom
+
+//.-fast

@@ -1,12 +1,15 @@
 //.#-*-Javascript-*-
-//.+pet
-PET Template for index.pug
---------------------------
+Loading index.pug/fast ..
+//.+fast
+FAST Template for index.pug
+---------------------------
 
-//.class indexClass(template):{
+//.#index = Section('index')
+//.index = sec.index('views/index.pug')
 
-//. def add(self, main):{
-//.  main < 'body'
+//.def addIndex():{
+Adding index ..
+//.+main.body
 let width = $(window).width();
 let height = $(window).height();
 $('#maintop').width(width);
@@ -18,9 +21,9 @@ for (let i=0; i<3; i++) {
     //$('#btnRoom' + i).css("top", height/2 - 50 + 70);
     $('#btnRoom' + i).css("top", 70);
 }
-//. }
+//.-main.body
 
-//. def output(self):{
+//.+index
 extends layout
 
 block content
@@ -30,10 +33,9 @@ block content
 //.#    button#btnPlay(class="w3-button w3-large w3-circle w3-green w3-hover-green w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:90px; height:90px; top:270px; left:518px;') <b>PLAY</b>
     input#inputMessage(class="w3-blue-grey w3-input w3-border w3-xlarge" type='text', placeholder='Message', style='position:absolute; width:996px; bottom:20px; left:20px;')
     button#btnSend(class="w3-button w3-round-xlarge w3-blue-grey w3-hover-blue-grey w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:90px; height:50px; bottom:20px; right:15px;') <b>SEND</b>
-    //.petf > 'block content'
-//. }
-//.}
+    //.index > 'block_content'
 
-//.index = indexClass('views/index.pug')
+//.-index
+//.} # end addIndex
 
-//.-pet
+//.-fast

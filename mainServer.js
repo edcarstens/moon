@@ -31,32 +31,30 @@ let connections = new Map()
 let gameclerkClass = require('./gameclerkClass')
 let clerk = new gameclerkClass(io, 3)
 let playerClass = require('./playerClass')
-//gameServer.init(io); // ?
-//gameServer.start();  // ?
-io.on('connection', function(socket) {
+io.on('connection', (socket) => {
     connections.set(socket,socket)
     console.log(`Connections=${connections.size}`)
     let data = clerk.getVacancies()
     //console.log('vacancies')
     //console.log(data)
     socket.emit('vacancies', data)
-    socket.once('disconnect', function() {
+    socket.once('disconnect', () => {
         connections.delete(socket)
         //rooms.leave(socket)
         clerk.leave(socket)
         console.log(`Connections=${connections.size}`)
-    });
-    socket.once('roomreq', function(data) {
+    })
+    socket.once('roomreq', (data) => {
         console.log(`Player ${data.player} requested room ${data.room}`)
         //let player = new playerClass(socket, data.player)
         //gameServer.players[socket.id] = player
         let room = clerk.arrive(socket, data)
-    });
+    })
     socket.once('playWithBots', function(data) {
         console.log(`Player ${data.player} in ${data.room} wants to play with bots`)
         clerk.playWithBots(data)
-    });
-});
+    })
+})
 console.log('mainServer finished integrating game server')
 
 /**
