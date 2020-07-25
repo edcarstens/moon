@@ -1,8 +1,4 @@
 class moonClass {
-    _boneClicked: (boneId) => boneId,
-    clickBoneId: {},
-    _bidClicked: (bid) => bid,
-    _callClicked: (call) => call,
     constructor(
         player='',
         state=null,
@@ -25,6 +21,10 @@ class moonClass {
             7: 'doubles',
             8: 'follow me' 
         }
+            this._boneClicked = (boneId) => boneId
+            this.clickBoneId = {}
+            this._bidClicked = (bid) => bid
+            this._callClicked = (call) => call
     }
 
     gotoLogin(
@@ -349,12 +349,12 @@ class moonClass {
             //done = (data.cmd == 'shake')
             $('#suit').hide()
             $('#trump').hide()
-            switch (cmds) {
-                    case "bid":
+            switch (data.cmd) {
+                    case "bid": {
                       $('#message').html(`<b>State your bid</b>`)
                       $('#message').show()
-                      let bid
                       let choices = [true] // pass is always a choice
+                      let bid
                       console.log('Max bid is ' + data.maxBid)
                       for (let i=1; i<6; i++) {
                           choices.push( (i > data.maxBid) )
@@ -379,12 +379,13 @@ class moonClass {
                           $('#btnBid' + i).hide()
                       }
                       $('#message').hide()
-                      break
-                    case "call":
+                        break
+                      }
+                    case "call": {
                       $('#message').html(`<b>Call your trump suit</b>`)
                       $('#message').show()
-                      let call
                       let choices = data.choices
+                      let call
                       for (let choice in choices) {
                           if (choices[choice]) {
                       	$('#btnCall' + choice).show()
@@ -402,8 +403,9 @@ class moonClass {
                           $('#btnCall' + i).hide()
                       }
                       $('#message').hide()
-                      break
-                    case "shake":
+                        break
+                      }
+                    case "shake": {
                       bones.pool = data.bones
                       bones.display(true)
                       $('#message').html(`<b>Draw one domino for shake</b>`)
@@ -417,8 +419,9 @@ class moonClass {
                       await moon.delay(1000)
                       moon.socket.emit('done', {boneId})
                       $('#message').hide()
-                      break
-                    case "play":
+                        break
+                      }
+                    case "play": {
                       bones.pool = data.bones
                       //console.log(data.stats)
                       bones.display(true)
@@ -451,8 +454,9 @@ class moonClass {
                       moon._boneClicked = (boneId) => boneId
                       moon.socket.emit('done', {boneId})
                       $('#message').hide()
-                      break
-                    case "draw":
+                        break
+                      }
+                    case "draw": {
                       bones.pool = data.bones
                       bones.display(true)
                       $('#message').html(`<b>Draw one domino</b>`)
@@ -465,8 +469,9 @@ class moonClass {
                       moon._boneClicked = (boneId) => boneId
                       moon.socket.emit('done', {boneId})
                       $('#message').hide()
-                      break
-                    case "draw7":
+                        break
+                      }
+                    case "draw7": {
                       //console.log(data.bones)
                       bones.pool = data.bones
                       //console.log(bones.pool)
@@ -499,8 +504,9 @@ class moonClass {
                       }
                       bones.display(false)
                       $('#message').hide()
-                      break
-                    case "discard":
+                        break
+                      }
+                    case "discard": {
                       // let player discard a domino (with the kitty)
                       //console.log('Discarding -- click on one domino')
                       bones.pool = data.bones
@@ -517,7 +523,8 @@ class moonClass {
                       bones.display(false)
                       moon._boneClicked = (boneId) => boneId
                       $('#message').hide()
-                      break
+                        break
+                      }
             }
             console.log('done')
         }
@@ -623,5 +630,5 @@ class moonClass {
 }
 
 //module.exports = moonClass
-export default moonClass
-    
+//export default moonClass
+

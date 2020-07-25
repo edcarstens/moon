@@ -284,10 +284,10 @@ $('#tile@bones.bonepool[i]@').hide()
 //.  }
 //.-moon.start1
 
-//.+moon.classvars
-_boneClicked: (boneId) => boneId,
-clickBoneId: {},
-//.-moon.classvars
+//.+moon.c.body
+this._boneClicked = (boneId) => boneId
+this.clickBoneId = {}
+//.-moon.c.body
 
 //.+bones
 //. for i in range(nbones):{
