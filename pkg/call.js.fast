@@ -1,34 +1,39 @@
 //.#-*-Javascript-*-
-//.+pet
-PET Feature: Call for MOON
---------------------------
+//.+fast
+FAST Feature: Call for MOON
+---------------------------
 
-//.class callClass(feature):{
-//. def add(self, index, moon, gameServer):{
-//.  index < 'block content'
-//.+pet
+//.def addCall():{
+//.+index.block_content
+//.+fast
 /* ----- trick so emacs ignores this section -----
-//.-pet
+//.-fast
 //.calls = (1,2,3,4,5,6,'Doubles','Follow Me')
 //.y = (620,550,480,410,340,270,200,130)
 //.for i in range(8):{
 button#btnCall@i@(class="w3-button w3-white w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:100px; height:50px; top:@y[i]@px; right:100px;' disabled) <b>@calls[i]@</b>
 //.}
-//.+pet
+//.+fast
 -- -----------------------------------------------
 */
-//.-pet
-//.  moon < 'gotoLogin body'
+//.-fast
+//.-index.block_content
+
+//.+moon.gotoLogin.body
 for (let i=0; i<8; i++) {
     $('#btnCall' + i).hide()
 }
-//.  moon < 'start1'
+//.-moon.gotoLogin.body
+
+//.+moon.start1
 for (let i=0; i<8; i++) {
     $('#btnCall' + i).on('click', () => {
 	moon._callClicked(i + 1)
     })
 }
-//.+moon.case("data.cmd == 'call'")
+//.-moon.start1
+
+//.+moon.case("call")
 $('#message').html(`<b>Call your trump suit</b>`)
 $('#message').show()
 let call
@@ -52,25 +57,40 @@ for (let i=0; i<8; i++) {
 $('#message').hide()
 //.-moon.case
 
-//.+gameServer.amethod('getCall', 'caller') < 'body'
-let data = {cmd:'call', choices:['1','2','3','4','5','6','doubles','none']}
-let result = await this.playerTurn(caller, data, 60)
-let call = result.call
-//.-gameServer.amethod('call')
+//.+gameServer.body
+//.+gameServer.getCall()
+a(
+    caller,
+) {
+    let data = {cmd:'call', choices:['1','2','3','4','5','6','doubles','none']}
+    let result = await this.playerTurn(caller, data, 60)
+    let call = result.call
+    return call
+}
+//.-gameServer.getCall
+//.-gameServer.body
 
-//.gameServer < 'constructor body'
+//.+gameServer.c.body
 this.call = 'Follow Me'
-
-//.moon < 'classvars'
+//.-gameServer.c.body
+    
+//.+moon.classvars
 _callClicked: (call) => call,
-//.+moon.afunction('callClicked') < 'body'
-return new Promise( (resolve, reject) => {
-    moon._callClicked = (call) => {
-	resolve(call)
-    }
-})  
-//.-moon.afunction
-//. } # def add
-//.} # class
-//.call = callClass()
-//.-pet
+//.-moon.classvars
+
+//.+moon.body
+//.+moon.callClicked()
+a(
+) {
+    return new Promise( (resolve, reject) => {
+        moon._callClicked = (call) => {
+	    resolve(call)
+        }
+    })
+}
+//.-moon.callClicked
+//.-moon.body
+
+//. } # def addCall
+
+//.-fast

@@ -1,0 +1,32 @@
+//.#-*-Javascript-*-
+Loading main.js.fast ..
+//.+fast
+FAST Template for main.js
+-------------------------
+This is the starting point for client-side
+
+//.main = sec.main('public/javascripts/main.js')
+//.#main = Section('main')
+//.#main('public/javascripts/main.js')
+//.def addMain():{
+Adding main ..
+//.+layout.scripts
+script(src='javascripts/main.js')
+//.-layout.scripts
+//.+main
+var socket = io();
+
+// Hide the address bar on iphone safari
+window.addEventListener("load", function() {
+    setTimeout(function() {
+	window.scrollTo(0,0);
+    }, 0);
+});
+
+//.main > 'body'
+
+//.-main
+
+//.} # end addMain
+
+//.-fast

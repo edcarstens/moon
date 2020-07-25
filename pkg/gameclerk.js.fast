@@ -1,0 +1,29 @@
+//.#-*-Javascript-*-
+//.+fast
+
+//.#gameclerk = SectionJs('gameclerk')
+//.gameclerk = secjs.gameclerk('gameclerkClass.js')
+
+//.def addGameClerk():{
+//.+mainServer.let
+let gameclerkClass = require('./gameclerkClass')
+let clerk = new gameclerkClass(io, 3)
+//.-mainServer.let
+//.this = +gameclerk
+let clerkClass = require('./clerkClass')
+let gameroomClass = require('./gameroomClass')
+class gameclerkClass extends clerkClass {
+    //.+this.newRoom()
+    (
+        roomId,
+    ) {
+        return new gameroomClass(this.io, roomId, this.clientsPerRoom)
+    }
+    //.-this.newRoom
+}
+module.exports = gameclerkClass
+
+//.-this
+//.} # end def addGameClerk
+
+//.-fast
