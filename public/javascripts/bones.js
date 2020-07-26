@@ -253,11 +253,11 @@ class bonesClass {
             this.faceup[k] = false
         }
     	let yhand = 460
-    	let xhand = 220
+    	let xhand = 100
         let x = xhand
         let y = yhand
         let x2 = 0 // showing tricks played in the past
-        let y2 = [0,160,160,160,160,160,160,160]
+        let y2 = [160,160,160,160,160,160,160]
         let y3 = 160 // showing dominos played for current trick
         for (let i=0; i<this.pool.length; i++) {
             let bone = this.pool[i]
@@ -267,7 +267,7 @@ class bonesClass {
                 if (bone.owner == '') {
                     this.faceup[bone.boneStr] = true
                     if (bone.played) {
-                        $('#tile' + bone.boneStr).css("left",700)
+                        $('#tile' + bone.boneStr).css("left",600)
                         $('#tile' + bone.boneStr).css("top",y3)
                         y3 += 60
                     }
@@ -283,9 +283,9 @@ class bonesClass {
                     //console.log(moon.socket.id)
                     this.faceup[bone.boneStr] = true
                     if (bone.trick) {
-                        $('#tile' + bone.boneStr).css("left",x2 + bone.trick*100)
-                        $('#tile' + bone.boneStr).css("top",y2[bone.trick])
-                        y2[bone.trick] += 60
+                        $('#tile' + bone.boneStr).css("left",x2 + (bone.trick-1)*100)
+                        $('#tile' + bone.boneStr).css("top",y2[bone.trick-1])
+                        y2[bone.trick-1] += 60
                         moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
                     }
                     else {

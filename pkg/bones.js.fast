@@ -57,7 +57,7 @@ script(src='javascripts/bones.js')
 button#btnBone@i@(class="w3-button w3-white w3-hover-green w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:@domw@px; height:@domh@px; top:@y[i]@px; left:@x[i]@px;' disabled) <i>MOON</i>
 img#tile@bones.bonepool[i]@(src="images/@bones.bonepool[i]@.jpg" class="w3-button" style="position:absolute; width:120px; height:60px; top:@y[i]@px; left:@x[i]@px;")
 //.  }
-h1#message(class="w3-center w3-card-4 w3-yellow w3-text-black w3-round-xxlarge w3-animate-fading" style='position:absolute; top:620px; left:200px; width:400px') <b>Welcome to MOON</b>
+h1#message(class="w3-center w3-card-4 w3-yellow w3-text-black w3-round-xxlarge w3-animate-fading" style='position:absolute; top:620px; left:50px; width:400px') <b>Welcome to MOON</b>
 table#stats(class="w3-center w3-card-4 w3-light-blue w3-text-black w3-round-xxlarge" style='position:absolute; top:20px; right:40px; width:600px') <tr><th>Name</th><th>Wins</th><th>Score</th><th>Tricks</th></tr>
 h2#trump(class="w3-center w3-card-4 w3-light-blue w3-text-black w3-round-xxlarge" style='position:absolute; bottom:260px; right:40px; width:300px') <b> TRUMP: - </b> 
 h2#suit(class="w3-center w3-card-4 w3-light-blue w3-text-black w3-round-xxlarge" style='position:absolute; bottom:200px; right:40px; width:300px') <b> SUIT: - </b> 
@@ -347,11 +347,11 @@ class bonesClass {
             this.faceup[k] = false
         }
 	let yhand = 460
-	let xhand = 220
+	let xhand = 100
         let x = xhand
         let y = yhand
         let x2 = 0 // showing tricks played in the past
-        let y2 = [0,160,160,160,160,160,160,160]
+        let y2 = [160,160,160,160,160,160,160]
         let y3 = 160 // showing dominos played for current trick
         for (let i=0; i<this.pool.length; i++) {
             let bone = this.pool[i]
@@ -361,7 +361,7 @@ class bonesClass {
                 if (bone.owner == '') {
                     this.faceup[bone.boneStr] = true
                     if (bone.played) {
-                        $('#tile' + bone.boneStr).css("left",700)
+                        $('#tile' + bone.boneStr).css("left",600)
                         $('#tile' + bone.boneStr).css("top",y3)
                         y3 += 60
                     }
@@ -377,9 +377,9 @@ class bonesClass {
                     //console.log(moon.socket.id)
                     this.faceup[bone.boneStr] = true
                     if (bone.trick) {
-                        $('#tile' + bone.boneStr).css("left",x2 + bone.trick*100)
-                        $('#tile' + bone.boneStr).css("top",y2[bone.trick])
-                        y2[bone.trick] += 60
+                        $('#tile' + bone.boneStr).css("left",x2 + (bone.trick-1)*100)
+                        $('#tile' + bone.boneStr).css("top",y2[bone.trick-1])
+                        y2[bone.trick-1] += 60
                         moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
                     }
                     else {
