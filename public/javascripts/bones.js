@@ -188,52 +188,52 @@ class bonesClass {
             '66'
         ]
         this.x = [
-                175,
-                285,
-                395,
-                65,
-                175,
-                285,
-                395,
-                505,
+                160,
+                260,
+                360,
+                60,
+                160,
+                260,
+                360,
+                460,
                 10,
-                120,
-                230,
-                340,
-                450,
-                560,
-                65,
-                175,
-                285,
-                395,
-                505,
-                175,
-                285,
-                395,
+                110,
+                210,
+                310,
+                410,
+                510,
+                60,
+                160,
+                260,
+                360,
+                460,
+                160,
+                260,
+                360,
         ]
         this.y = [
                 170,
                 170,
                 170,
-                230,
-                230,
-                230,
-                230,
-                230,
-                290,
-                290,
-                290,
-                290,
-                290,
-                290,
-                350,
-                350,
-                350,
-                350,
-                350,
-                410,
-                410,
-                410,
+                220,
+                220,
+                220,
+                220,
+                220,
+                270,
+                270,
+                270,
+                270,
+                270,
+                270,
+                320,
+                320,
+                320,
+                320,
+                320,
+                370,
+                370,
+                370,
         ]       
         this.faceup = {}
         let bone = {faceup:false, owner:'', boneStr:''}
@@ -252,11 +252,13 @@ class bonesClass {
         for (let k in this.faceup) {
             this.faceup[k] = false
         }
-        let x = 320
-        let y = 720
-        let x2 = 0
+    	let yhand = 460
+    	let xhand = 220
+        let x = xhand
+        let y = yhand
+        let x2 = 0 // showing tricks played in the past
         let y2 = [0,160,160,160,160,160,160,160]
-        let y3 = 400
+        let y3 = 160 // showing dominos played for current trick
         for (let i=0; i<this.pool.length; i++) {
             let bone = this.pool[i]
             if (bone.faceup) {
@@ -265,7 +267,7 @@ class bonesClass {
                 if (bone.owner == '') {
                     this.faceup[bone.boneStr] = true
                     if (bone.played) {
-                        $('#tile' + bone.boneStr).css("left",400)
+                        $('#tile' + bone.boneStr).css("left",700)
                         $('#tile' + bone.boneStr).css("top",y3)
                         y3 += 60
                     }
@@ -296,10 +298,10 @@ class bonesClass {
                         else {
                             moon.clickBoneId[bone.boneStr] = -1 // signals illegal play
                         }
-                        x += 120
-                        if ((y == 720) && (x > 560)) {
-                            x = 260
-                            y += 70
+                        x += 110
+                        if ((y == yhand) && (x > xhand + 2*110)) {
+                            x = xhand - 60
+                            y += 60
                         }
                     }
                 }
