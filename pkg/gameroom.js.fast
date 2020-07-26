@@ -18,21 +18,17 @@ io.on('connection', (socket) => {
     //console.log('vacancies')
     //console.log(data)
     socket.emit('vacancies', data)
-    //.#+mainServer.socket('', 'socket', '').once('disconnect')
     socket.once('disconnect', () => {
         connections.delete(socket)
         //rooms.leave(socket)
         clerk.leave(socket)
         console.log(`Connections=${connections.size}`)
-    //.#-mainServer.socket
     })
-    //.#+mainServer.socket().once('roomreq')
     socket.once('roomreq', (data) => {
         console.log(`Player ${data.player} requested room ${data.room}`)
         //let player = new playerClass(socket, data.player)
         //gameServer.players[socket.id] = player
         let room = clerk.arrive(socket, data)
-    //.#-mainServer.socket
     })
     //.mainServer > 'connection_triggers'
 //.#-mainServer.socket

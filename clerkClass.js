@@ -90,12 +90,13 @@ class clerkClass {
     leave(
         socket,
     ) {
-        let io = this.io
         let x = this.roomNumberOf[socket.id]
+    	let io = this.io
         delete this.roomNumberOf[socket.id]
         if (this.rooms[x]) {
      if (this.rooms[x].leave(socket)) {
                 this.vacancies.push(x)
+    		io.to(this.rooms[x].name).emit('info', socket.id + ' has disconnected')
      }
      else {
                 console.log('closing room ' + x)
