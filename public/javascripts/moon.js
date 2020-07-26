@@ -185,8 +185,8 @@ class moonClass {
         
         // Need to show active gamerooms with moonbots..
         moon.socket.on('vacancies', data => {
-            //console.log('vacancies..')
-            //console.log(data.vacancies)
+            console.log('vacancies..')
+            console.log(data.vacancies)
             //console.log(data)
             var rooms = []
             if (moon.room == null) {
@@ -199,12 +199,12 @@ class moonClass {
                 for (let i=0; i<3; i++) {
                     if (rooms.length > i) {
                         let room = data[rooms[i]]
-                        //console.log('room')
-                        //console.log(room)
+                        console.log('room')
+                        console.log(room)
                         let players = room.players
-                        //console.log(players)
+                        console.log(players)
                         let playerNames = []
-                        for (player of players) {
+                        for (let player of players) {
                             playerNames.push(moon.limit(player.nickName,7))
                         }
                         //console.log(playerNames)

@@ -21,6 +21,8 @@ class clerkClass {
     getVacancies(
     ) {
         let rv = {vacancies:{}}
+    	//console.log('clerk.getVacancies called..')
+    	//console.log(this.vacancies.length)
         if (this.vacancies.length) {
      for (let roomNumber of this.vacancies) {
          if (! (roomNumber in rv)) {
@@ -63,7 +65,7 @@ class clerkClass {
         else if (x != undefined) { // requested specific room
      console.log('requested room has a vacancy')
      console.log(x)
-     this.removeVacancies(x)
+     this.removeVacancy(x)
      r = this.rooms[x]
         }
         else if (this.vacancies.length) {
@@ -100,7 +102,7 @@ class clerkClass {
      }
      else {
                 console.log('closing room ' + x)
-                // remove the vacancies for this room
+                // remove all vacancies for this room
                 this.removeVacancies(x)
                 // remove the room
                 delete this.rooms[x]
@@ -108,18 +110,23 @@ class clerkClass {
         }
     }
 
+    removeVacancy(
+        x,
+    ) {
+        var idx = this.vacancies.indexOf(x)
+        if (idx >= 0) {
+     this.vacancies.splice(idx, 1)
+        }
+    }
+
     removeVacancies(
         x,
     ) {
-        //this.vacancies = this.vacancies.filter((xx) => { return (xx != x) })
         var idx = this.vacancies.indexOf(x)
-        //console.log(this.vacancies)
-        //console.log(`removeVacancies: idx=${idx}`)
         while (idx >= 0) {
      this.vacancies.splice(idx, 1)
      idx = this.vacancies.indexOf(x)
         }
-        //console.log(this.vacancies)
     }
 
     playWithBots(
