@@ -3,3 +3,4 @@ heroku.com is where I go to deploy this app
 CLI
 ---
 heroku -h
+git push heroku master
