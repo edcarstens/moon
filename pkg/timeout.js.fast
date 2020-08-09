@@ -1,0 +1,79 @@
+//.#-*-Javascript-*-
+//.+fast
+FAST Feature: Timeout for MOON
+------------------------------
+
+//.timeout = secjs.timeout
+
+//.def addTimeout():{
+//.+index.block_content
+//.+fast
+/* ----- trick so emacs ignores this section -----
+//.-fast
+button#btnTimeout(class="w3-button w3-blue w3-hover-white w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:200px; height:50px; bottom:80px; right:10px;') <b>TIMEOUT:-</b>
+button#btnTimeoutRed(class="w3-button w3-red w3-hover-white w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:200px; height:50px; bottom:80px; right:10px;') <b>TIMEOUT:-</b>
+//.+fast
+-- -----------------------------------------------
+*/
+//.-fast
+//.-index.block_content
+
+//.+moon.gotoLogin.body
+$('#btnTimeout').hide()
+$('#btnTimeoutRed').hide()
+//.-moon.gotoLogin.body
+
+//.+moon.c.body
+this._timeoutClicked = () => 0  // for future feature, adding more time
+//.-moon.c.body
+
+//.+moon.start1
+$('#btnTimeout').on('click', () => {
+    moon._timeoutClicked()
+})
+moon.socket.on('timeout', data => {
+    if (data.enable) {
+        if (data.timeout <= 10) {
+            $('#btnTimeout').hide()
+            $('#btnTimeoutRed').html(`<b>TIMEOUT: ${data.timeout}</b>`)
+            $('#btnTimeoutRed').show()
+        }
+        else {
+            $('#btnTimeoutRed').hide()
+            $('#btnTimeout').html(`<b>TIMEOUT: ${data.timeout}</b>`)
+            $('#btnTimeout').show()
+            //$('#btnTimeout').prop("disabled", false)
+        }
+    }
+    else {
+        $('#btnTimeout').hide()
+    }
+})
+//.-moon.start1
+
+//.+gameServer.body
+//.+gameServer.moonTimeout()
+a(
+    resolve,
+    player,
+    timeout,
+) {
+    const nonce = this.moonTimeoutNonce = new Object()
+    for(let t=timeout; t>0; t--) {
+        await this.delay(1000)
+        if (nonce !== this.moonTimeoutNonce) {
+            resolve({status:'CANCELED'})
+            //console.log('moonTimeout was canceled')
+            return // a new call was made to moonTimeout, so cancel this one
+        }
+        console.log(`TIMEOUT: ${t-1}`)
+        player.socket.emit('timeout', {enable:true, timeout:t-1})
+    }
+    resolve({status:'TIMED OUT'})
+}
+//.-gameServer.moonTimeout
+//.-gameServer.body
+
+//.} # def addTimeout
+
+//.-fast

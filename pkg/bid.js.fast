@@ -11,9 +11,11 @@ FAST Feature: Bidding for MOON
 /* ----- trick so emacs ignores this section -----
 //.-fast
 //.bids = ('PASS',4,5,6,7,'MOON')
-//.y = (620,550,480,410,340,270)
+//.#y = (620,550,480,410,340,270)
+//.y = 540
 //.for i in range(6):{
-button#btnBid@i@(class="w3-button w3-white w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:100px; height:50px; top:@y[i]@px; right:20px;' disabled) <b>@bids[i]@</b>
+button#btnBid@i@(class="w3-button w3-white w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:100px; height:50px; top:@y@px; right:20px;' disabled) <b>@bids[i]@</b>
+//.y -= 60
 //.}
 //.+fast
 -- -----------------------------------------------
@@ -27,6 +29,10 @@ for (let i=0; i<6; i++) {
 }
 //.-moon.gotoLogin.body
 
+//.+moon.c.body
+this._bidClicked = (bid) => bid
+//.-moon.c.body
+
 //.+moon.start1
 for (let i=0; i<6; i++) {
     $('#btnBid' + i).on('click', () => {
@@ -35,11 +41,33 @@ for (let i=0; i<6; i++) {
 }
 //.-moon.start1
 
+//.+moon.body
+
+//.+moon.bidClickedOrBot()
+a(
+) {
+    let p1 = new Promise( resolve => {
+         moon._bidClicked = (bid) => {
+	     resolve({bid, status:'DONE'})
+        }
+    })
+    let p2 = new Promise( resolve => {
+        moon.socket.once('moonbot', result => {
+            resolve(result)
+        })
+    })
+    return Promise.race([p1,p2])
+}
+//.-moon.bidClickedOrBot
+
+//.-moon.body
+
 //.+moon.case("bid")
-$('#message').html(`<b>State your bid</b>`)
+$('#message').html(`<b>Choose your bid</b>`)
 $('#message').show()
 let choices = [true] // pass is always a choice
 let bid
+let result
 console.log('Max bid is ' + data.maxBid)
 for (let i=1; i<6; i++) {
     choices.push( (i > data.maxBid) )
@@ -57,10 +85,12 @@ for (let choice in choices) {
 	$('#btnBid' + choice).prop("disabled", true)
     }
 }
-bid = await moon.bidClicked()
-moon.displayBid(bid)
+result = await moon.bidClickedOrBot()
+bid = result.bid
 console.log('My bid is ' + bid)
-moon.socket.emit('done', {bid})
+if (result.status == 'DONE') {
+    moon.socket.emit('done', {bid})
+}
 for (let i=0; i<6; i++) {
     $('#btnBid' + i).hide()
 }
@@ -101,7 +131,7 @@ a(
 	    maxBid = -2 // special code for stuck bid
         }
         data = {cmd:'bid', maxBid}
-        let result = await this.playerTurn(player, data, 60)
+        let result = await this.playerTurn(room, player, data, 60)
         let bid = result.bid
         this.io.to(room.name).emit('bid', {player:nickName, bid})
         if (bid > maxBid) {
@@ -114,23 +144,6 @@ a(
 }
 //.-gameServer.biddingRound
 //.-gameServer.body
-
-//.+moon.c.body
-this._bidClicked = (bid) => bid
-//.-moon.c.body
-
-//.+moon.body
-//.+moon.bidClicked()
-a(
-) {
-    return new Promise( (resolve, reject) => {
-        moon._bidClicked = (bid) => {
-	    resolve(bid)
-        }
-    })
-}
-//.-moon.bidClicked
-//.-moon.body
 
 //.} # def addBid
 

@@ -9,9 +9,11 @@ FAST Feature: Call for MOON
 /* ----- trick so emacs ignores this section -----
 //.-fast
 //.calls = (1,2,3,4,5,6,'Doubles','Follow Me')
-//.y = (620,550,480,410,340,270,200,130)
+//.#y = (620,550,480,410,340,270,200,130)
+//.y = 540
 //.for i in range(8):{
-button#btnCall@i@(class="w3-button w3-white w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:100px; height:50px; top:@y[i]@px; right:100px;' disabled) <b>@calls[i]@</b>
+button#btnCall@i@(class="w3-button w3-white w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:120px; height:50px; top:@y@px; right:40px;' disabled) <b>@calls[i]@</b>
+//.y -= 60
 //.}
 //.+fast
 -- -----------------------------------------------
@@ -31,12 +33,21 @@ for (let i=0; i<8; i++) {
 	moon._callClicked(i + 1)
     })
 }
+
+moon.socket.on('call', data => {
+    //moon.trump = data.call
+    let s = moon.describeTrump[data.call]
+    $('#message').html(`<b> ${data.caller} called ${s} trump</b>`)
+    $('#message').show()
+    moon.displayTrump(data.call)
+})
 //.-moon.start1
 
 //.+moon.case("call")
 $('#message').html(`<b>Call your trump suit</b>`)
 $('#message').show()
 let choices = data.choices
+let result
 let call
 for (let choice in choices) {
     if (choices[choice]) {
@@ -48,9 +59,12 @@ for (let choice in choices) {
 	$('#btnCall' + choice).prop("disabled", true)
     }
 }
-call = await moon.callClicked()
+result = await moon.callClickedOrBot()
+call = result.call
 console.log('My call is ' + call)
-moon.socket.emit('done', {call})
+if (result.status == 'DONE') {
+    moon.socket.emit('done', {call})
+}
 for (let i=0; i<8; i++) {
     $('#btnCall' + i).hide()
 }
@@ -60,10 +74,11 @@ $('#message').hide()
 //.+gameServer.body
 //.+gameServer.getCall()
 a(
+    room,
     caller,
 ) {
     let data = {cmd:'call', choices:['1','2','3','4','5','6','doubles','none']}
-    let result = await this.playerTurn(caller, data, 60)
+    let result = await this.playerTurn(room, caller, data, 60)
     let call = result.call
     return call
 }
@@ -79,16 +94,22 @@ this._callClicked = (call) => call
 //.-moon.c.body
 
 //.+moon.body
-//.+moon.callClicked()
+//.+moon.callClickedOrBot()
 a(
 ) {
-    return new Promise( (resolve, reject) => {
+    let p1 = new Promise( (resolve, reject) => {
         moon._callClicked = (call) => {
-	    resolve(call)
+	    resolve({call, status:'DONE'})
         }
     })
+    let p2 = new Promise( resolve => {
+        moon.socket.once('moonbot', result => {
+            resolve(result)
+        })
+    })
+    return Promise.race([p1,p2])
 }
-//.-moon.callClicked
+//.-moon.callClickedOrBot
 //.-moon.body
 
 //. } # def addCall

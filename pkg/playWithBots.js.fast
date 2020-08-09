@@ -9,7 +9,7 @@ FAST Feature: Play With Bots for Moon
 //.+fast
 /* ----- trick so emacs ignores this section -----
 //.-fast
-button#btnPlayWithBots(class="w3-button w3-green w3-border w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:200px; height:50px; top:60px; right:10px;') <b>Play with Bots</b>
+button#btnPlayWithBots(class="w3-button w3-green w3-border w3-hover-blue w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:200px; height:60px; bottom:80px; right:10px;') <b>Play with Bots</b>
 //.+fast
 -- -----------------------------------------------
 */

@@ -29,6 +29,7 @@ Loading templates..
 ///fast.include('draw.js.fast')
 ///fast.include('discard.js.fast')
 ///fast.include('playWithBots.js.fast')
+///fast.include('timeout.js.fast')
 
 Adding features..
 
@@ -55,6 +56,7 @@ Adding features..
 //.addDraw()
 //.addDiscard()
 //.addPlayWithBots()
+//.addTimeout()
 
 Writing template files..
 //.# Write Template Files

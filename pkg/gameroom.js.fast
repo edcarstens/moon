@@ -212,18 +212,6 @@ class gameroomClass extends roomClass {
     }
     //.-this.nextPlayer
 
-    /*
-    *players(rounds) { // generator method
-        while (this.rounds < rounds) {
-            this.playerTurn = this.playerNextTurn
-            this.playerNextTurn++
-            if (this.playerNextTurn >= this.n) {
-                this.playerNextTurn = 0
-                this.rounds++
-            }
-            yield this.sockets[this.playerTurn] // return the socket
-        }
-    }*/
 }
 module.exports = gameroomClass
 

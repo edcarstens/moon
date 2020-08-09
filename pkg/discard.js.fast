@@ -7,21 +7,41 @@ FAST Feature: Discard one domino
 //.+moon.case('discard')
 // let player discard a domino (with the kitty)
 //console.log('Discarding -- click on one domino')
+let result
+let boneId
 bones.pool = data.bones
 bones.display(true)
 $('#message').html(`<b>Discard a domino</b>`)
 $('#message').show()
 // do I really need to find the bone in bones.pool?
-boneId = await moon.boneClicked()
+result = await moon.boneClickedOrBot()
+boneId = result.boneId
 console.log(`clicked ${boneId}`)
 bones.pool[boneId].faceup = false
 bones.pool[boneId].owner = ''
 bones.pool[boneId].discarded = true
-moon.socket.emit('done', {boneId})
+if (result.status == 'DONE') {
+    moon.socket.emit('done', {boneId})
+}
 bones.display(false)
 moon._boneClicked = (boneId) => boneId
 $('#message').hide()
 //.-moon.case
+
+//.+gameServer.body
+//.+gameServer.getDiscard()
+a(
+    room,
+    caller,
+) {
+    let callerPool = await this.sendBonePool(caller.socket.id)
+    let data = {cmd:'discard', bones:callerPool}
+    let result = await this.playerTurn(room, caller, data, 180)
+    let boneId = result.boneId
+    return boneId
+}
+//.-gameServer.getDiscard
+//.-gameServer.body
 
 //.} # def addDiscard
 

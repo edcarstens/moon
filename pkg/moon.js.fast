@@ -98,8 +98,8 @@ class moonClass {
         $('#btnRoom3').show()
         $('#inputChatName').show()
         $('#gfx').hide()
-        $('#btnSend').hide()
-        $('#inputMessage').hide()
+        //$('#btnSend').hide()
+        //$('#inputMessage').hide()
         //.moon.gotoLogin.body > ''
     }
     //.-moon.gotoLogin
@@ -128,6 +128,7 @@ class moonClass {
     }
     //.-moon.clickPlay
 
+//.if (0):{
     //.+moon.clickSend()
     a(
     ) {
@@ -138,7 +139,7 @@ class moonClass {
         })
     }
     //.-moon.clickSend
-
+//.}
     //.+moon.boneClickedOrBot()
     a(
     ) {
@@ -265,8 +266,8 @@ class moonClass {
             $('#btnRoom' + i).hide()
         }
         $('#inputChatName').hide()
-        $('#btnSend').show()
-        $('#inputMessage').show()
+        //$('#btnSend').show()
+        //$('#inputMessage').show()
         console.log(`Hello ${moon.player}`)
         moon.waitForStart().then( (x) => {
             console.log('Moon game starting..')
@@ -306,6 +307,12 @@ class moonClass {
             bones.pool[boneId].discarded = bone.discarded
             bones.display(false)
             //}
+        })
+
+        moon.socket.on('stats', (data) => {
+            this.displayStats(data.stats)
+            bones.pool = data.bones
+            bones.display(false)
         })
         
         moon.socket.on('info', (s) => {
