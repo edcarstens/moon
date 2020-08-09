@@ -188,7 +188,7 @@ class gameServerClass {
             let socket = player.socket
             let pool = await this.sendBonePool(socket.id, first)
             let stats = await this.getStats(players)
-            let result = await this.playerTurn(player, {cmd:'play', bones:pool, stats:stats, maxBone:maxBone, trump:this.call}, 20)
+            let result = await this.playerTurn(player, {cmd:'play', bones:pool, stats:stats, bid:this.bid, maxBone:maxBone, trump:this.call}, 20)
             let {boneId} = result
             let bone = this.bonepool[boneId]
             bone.played = true
@@ -457,7 +457,9 @@ class gameServerClass {
         // Determine remaining bone in kitty
         let kitty = await this.findKitty(caller.socket.id)
         //console.log(caller)
-        console.log(`Player ${caller.nickName} won the bid`)
+	this.bid = caller.bid
+        console.log(`Player ${caller.nickName} won the bid with ${this.bid}`)
+	this.io.to(room.name).emit('bid', {bid:this.bid, caller:caller.nickName})
         let callerPool = await this.sendBonePool(caller.socket.id)
         let data = {cmd:'discard', bones:callerPool}
         let result = await this.playerTurn(caller, data, 180)

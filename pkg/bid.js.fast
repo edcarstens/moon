@@ -58,6 +58,7 @@ for (let choice in choices) {
     }
 }
 bid = await moon.bidClicked()
+moon.displayBid(bid)
 console.log('My bid is ' + bid)
 moon.socket.emit('done', {bid})
 for (let i=0; i<6; i++) {
@@ -65,6 +66,21 @@ for (let i=0; i<6; i++) {
 }
 $('#message').hide()
 //.-moon.case
+
+//.+moon.body
+//.+moon.displayBid()
+(
+    bid,
+) {
+    let s = bid + 3
+    if (bid == 5) {
+	s = 'MOON'
+    }
+    $('#bid').html(`<b> BID: ${s} </b>`)
+    $('#bid').show()
+}
+//.-moon.displayBid
+//.-moon.body
 
 //.+gameServer.body
 //.+gameServer.biddingRound()

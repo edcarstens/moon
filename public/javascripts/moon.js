@@ -182,6 +182,7 @@ class moonClass {
         console.log('Starting MOON...')
         $('#trump').hide()
         $('#suit').hide()
+    	$('#bid').hide()
         
         // Need to show active gamerooms with moonbots..
         moon.socket.on('vacancies', data => {
@@ -334,7 +335,13 @@ class moonClass {
         moon.socket.on('info', (s) => {
             $('#message').html('<b>' + s + '</b>')
         })
-        
+    	
+        moon.socket.on('bid', data => {
+     $('#message').html(`<b> ${data.caller} won the bid with ${data.bid}</b>`)
+     $('#message').show()
+     moon.displayBid(data.bid)
+    	})
+    	
         moon.socket.on('call', data => {
             //moon.trump = data.call
             let s = moon.describeTrump[data.call]
@@ -347,6 +354,7 @@ class moonClass {
             data = await moon.myTurn()
             console.log(`My turn to ${data.cmd}`)
             //done = (data.cmd == 'shake')
+     $('#bid').hide()
             $('#suit').hide()
             $('#trump').hide()
             switch (data.cmd) {
@@ -373,6 +381,7 @@ class moonClass {
                           }
                       }
                       bid = await moon.bidClicked()
+                      moon.displayBid(bid)
                       console.log('My bid is ' + bid)
                       moon.socket.emit('done', {bid})
                       for (let i=0; i<6; i++) {
@@ -429,6 +438,7 @@ class moonClass {
                       $('#message').show()
                       this.displayStats(data.stats)
                       //console.log(data.maxBone)
+                      this.displayBid(data.bid)
                       this.displaySuit(data.maxBone)
                       this.displayTrump(data.trump)
                       boneId = -1
@@ -610,6 +620,16 @@ class moonClass {
         $('#trump').show()
     }
     
+    displayBid(
+        bid,
+    ) {
+    let s = bid + 3
+    if (bid == 5) {
+    	s = 'MOON'
+    }
+    $('#bid').html(`<b> BID: ${s} </b>`)
+    $('#bid').show()
+    }
     async bidClicked(
     ) {
     return new Promise( (resolve, reject) => {

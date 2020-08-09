@@ -258,7 +258,8 @@ class bonesClass {
         let y = yhand
         let x2 = 0 // showing tricks played in the past
         let y2 = [160,160,160,160,160,160,160]
-        let y3 = 160 // showing dominos played for current trick
+    	let x3 = 40 // showing dominos played for current trick
+        let y3 = 350
         for (let i=0; i<this.pool.length; i++) {
             let bone = this.pool[i]
             if (bone.faceup) {
@@ -267,9 +268,9 @@ class bonesClass {
                 if (bone.owner == '') {
                     this.faceup[bone.boneStr] = true
                     if (bone.played) {
-                        $('#tile' + bone.boneStr).css("left",600)
+                        $('#tile' + bone.boneStr).css("left",x3)
                         $('#tile' + bone.boneStr).css("top",y3)
-                        y3 += 60
+                        x3 += 130
                     }
                     else {
                         $('#tile' + bone.boneStr).css("left",$('#btnBone' + i).css("left"))

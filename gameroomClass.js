@@ -27,7 +27,11 @@ class gameroomClass extends roomClass {
 
     playMoon(
     ) {
-        var i = this.players.length
+    	if (this.gameServer) {
+     console.log('Game already in progress!')
+     return
+    	}
+        let i = this.players.length
         while (this.players.length < this.maxCapacity) {
             let id = `moonbot${i}`
             let p = new playerClass({id:id}, 'moonbot')
