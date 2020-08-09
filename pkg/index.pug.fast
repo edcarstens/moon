@@ -31,8 +31,8 @@ block content
     div#gfx(style='position:absolute; width:100%; height:100%; top:60px; left:20px')
     input#inputChatName(class="w3-input w3-border w3-round-xxlarge w3-xlarge" type='text', placeholder='Nickname', style='position:absolute; width:400px; top:200px; left:368px;')
 //.#    button#btnPlay(class="w3-button w3-large w3-circle w3-green w3-hover-green w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:90px; height:90px; top:270px; left:518px;') <b>PLAY</b>
-    input#inputMessage(class="w3-blue-grey w3-input w3-border w3-xlarge" type='text', placeholder='Message', style='position:absolute; width:996px; bottom:20px; left:20px;')
-    button#btnSend(class="w3-button w3-round-xlarge w3-blue-grey w3-hover-blue-grey w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:90px; height:50px; bottom:20px; right:15px;') <b>SEND</b>
+//.#    input#inputMessage(class="w3-blue-grey w3-input w3-border w3-xlarge" type='text', placeholder='Message', style='position:absolute; width:996px; bottom:20px; left:20px;')
+//.#    button#btnSend(class="w3-button w3-round-xlarge w3-blue-grey w3-hover-blue-grey w3-text-black w3-card-4 w3-ripple" style='position:absolute; width:90px; height:50px; bottom:20px; right:15px;') <b>SEND</b>
     //.index > 'block_content'
 
 //.-index
