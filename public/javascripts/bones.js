@@ -279,7 +279,7 @@ class bonesClass {
                     if (bone.played) {
                         $('#tile' + bone.boneStr).css("left",x3)
                         $('#tile' + bone.boneStr).css("top",y3)
-                        x3 += 130
+                        y3 += 60
                     }
                     else {
                         $('#tile' + bone.boneStr).css("left",$('#btnBone' + i).css("left"))

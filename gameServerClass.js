@@ -439,8 +439,9 @@ class gameServerClass {
         //console.log(caller)
     	this.bid = caller.bid
         console.log(`Player ${caller.nickName} won the bid with ${this.bid}`)
-    	this.io.to(room.name).emit('bid', {bid:this.bid, caller:caller.nickName})
-        let boneId = await this.getDiscard(room, caller)
+    	this.io.to(room.name).emit('bid', {bid:this.bid, player:caller.nickName, won:true})
+    	await this.delay(1000) // allow time to read msg
+    	let boneId = await this.getDiscard(room, caller)
         kitty.kitty = false // no longer need to identify this bone
         console.log(`boneId = ${boneId}`)
         let bone = this.bonepool[boneId]
@@ -519,7 +520,12 @@ class gameServerClass {
                         winner = player
                         console.log(`Player ${player.nickName} wins MOON`)
                         this.io.to(room.name).emit('info', `${player.nickName} wins MOON`) 
-                        winner.wins++
+    			winner.wins++
+    			// Emit stats
+    			let stats = await this.getStats(room.round())
+    			let pool = await this.sendBonePool(winner)
+    			this.io.to(room.name).emit('stats', {stats, bones:pool})
+    			await this.delay(1000) // allow players to see final trick and stats
                     }
                 }
             }
@@ -563,7 +569,7 @@ class gameServerClass {
     ) {
     for (let bone of this.bonepool) {
         if (!bone.faceup) {
-            console.log(bone)
+            //console.log(bone)
             bone.owner = socketId
             bone.kitty = true
             bone.faceup = true
@@ -729,7 +735,7 @@ class gameServerClass {
         data = {cmd:'bid', maxBid}
         let result = await this.playerTurn(room, player, data, 60)
         let bid = result.bid
-        this.io.to(room.name).emit('bid', {player:nickName, bid})
+        this.io.to(room.name).emit('bid', {player:nickName, bid, won:false})
         if (bid > maxBid) {
      maxBid = bid
      winner = player
@@ -781,7 +787,7 @@ class gameServerClass {
             //console.log('moonTimeout was canceled')
             return // a new call was made to moonTimeout, so cancel this one
         }
-        console.log(`TIMEOUT: ${t-1}`)
+        //console.log(`TIMEOUT: ${t-1}`)
         player.socket.emit('timeout', {enable:true, timeout:t-1})
     }
     resolve({status:'TIMED OUT'})

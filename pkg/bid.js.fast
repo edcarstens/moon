@@ -98,7 +98,7 @@ $('#message').hide()
 //.-moon.case
 
 //.+moon.body
-//.+moon.displayBid()
+//.+moon.cvtBid()
 (
     bid,
 ) {
@@ -106,6 +106,17 @@ $('#message').hide()
     if (bid == 5) {
 	s = 'MOON'
     }
+    if (bid == 0) {
+	s = 'PASS'
+    }
+    return s
+}
+//.-moon.cvtBid
+//.+moon.displayBid()
+(
+    bid,
+) {
+    let s = this.cvtBid(bid)
     $('#bid').html(`<b> BID: ${s} </b>`)
     $('#bid').show()
 }
@@ -133,7 +144,7 @@ a(
         data = {cmd:'bid', maxBid}
         let result = await this.playerTurn(room, player, data, 60)
         let bid = result.bid
-        this.io.to(room.name).emit('bid', {player:nickName, bid})
+        this.io.to(room.name).emit('bid', {player:nickName, bid, won:false})
         if (bid > maxBid) {
 	    maxBid = bid
 	    winner = player

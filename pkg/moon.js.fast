@@ -320,7 +320,14 @@ class moonClass {
         })
 	
         moon.socket.on('bid', data => {
-	    $('#message').html(`<b> ${data.caller} won the bid with ${data.bid}</b>`)
+	    //console.log(data)
+	    //console.log(`<b> ${data.player} won the bid with ${data.bid}</b>`)
+	    let s = moon.cvtBid(data.bid)
+	    let won = ''
+	    if (data.won) {
+		won = 'won with '
+	    }
+	    $('#message').html(`<b> ${data.player} ${won}bid ${s}</b>`)
 	    $('#message').show()
 	    moon.displayBid(data.bid)
 	})

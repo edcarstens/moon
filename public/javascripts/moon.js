@@ -366,7 +366,14 @@ class moonClass {
         })
     
         moon.socket.on('bid', data => {
-     $('#message').html(`<b> ${data.caller} won the bid with ${data.bid}</b>`)
+     //console.log(data)
+     //console.log(`<b> ${data.player} won the bid with ${data.bid}</b>`)
+     let s = moon.cvtBid(data.bid)
+     let won = ''
+     if (data.won) {
+    		won = 'won with '
+     }
+     $('#message').html(`<b> ${data.player} ${won}bid ${s}</b>`)
      $('#message').show()
      moon.displayBid(data.bid)
     	})
@@ -677,13 +684,22 @@ class moonClass {
     return Promise.race([p1,p2])
     }
     
-    displayBid(
+    cvtBid(
         bid
     ) {
     let s = bid + 3
     if (bid == 5) {
     	s = 'MOON'
     }
+    if (bid == 0) {
+    	s = 'PASS'
+    }
+    return s
+    }
+    displayBid(
+        bid
+    ) {
+    let s = this.cvtBid(bid)
     $('#bid').html(`<b> BID: ${s} </b>`)
     $('#bid').show()
     }
