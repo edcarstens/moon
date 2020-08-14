@@ -212,28 +212,28 @@ class bonesClass {
                 360
         ]
         this.y = [
-                170,
-                170,
-                170,
-                220,
-                220,
-                220,
-                220,
-                220,
-                270,
-                270,
-                270,
-                270,
-                270,
-                270,
-                320,
-                320,
-                320,
-                320,
-                320,
                 370,
                 370,
-                370
+                370,
+                420,
+                420,
+                420,
+                420,
+                420,
+                470,
+                470,
+                470,
+                470,
+                470,
+                470,
+                520,
+                520,
+                520,
+                520,
+                520,
+                570,
+                570,
+                570
         ]       
         this.faceup = {}
         let bone = {faceup:false, owner:'', boneStr:''}
@@ -252,16 +252,18 @@ class bonesClass {
         for (let k in this.faceup) {
             this.faceup[k] = false
         }
-    	let yhand = 460
-    	let xhand = 100
-        let xkitty = xhand + 110
-        let ykitty = yhand - 60
+    	let dh = 50
+    	let dw = 100
+    	let yhand = 140
+    	let xhand = 120
+        let xkitty = xhand + dw
+        let ykitty = yhand + dh
         let x = xhand
         let y = yhand
         let x2 = 0 // showing tricks played in the past
-        let y2 = [160,160,160,160,160,160,160]
-        let y3 = 160 // showing dominos played for current trick
-    	let x3 = 680
+        let y2 = [560,560,560,560,560,560,560]
+        let y3 = 510-3*dh // showing dominos played for current trick
+    	let x3 = 420
         // x4,y4 - location of opponents' tricks won (unused)
         let x4 = 0
         let y4 = [340,340,340,340,340,340,340]
@@ -278,12 +280,12 @@ class bonesClass {
                     this.faceup[bone.boneStr] = true
                     if (bone.played) {
                         $('#tile' + bone.boneStr).css("left",x3)
-                        $('#tile' + bone.boneStr).css("top",y3)
-                        y3 += 60
+                        $('#tile' + bone.boneStr).css("bottom",y3)
+                        y3 -= dh
                     }
                     else {
                         $('#tile' + bone.boneStr).css("left",$('#btnBone' + i).css("left"))
-                        $('#tile' + bone.boneStr).css("top",$('#btnBone' + i).css("top"))
+                        $('#tile' + bone.boneStr).css("bottom",$('#btnBone' + i).css("bottom"))
                     }
                     moon.clickBoneId[bone.boneStr] = -3 // signals illegal play
                 }
@@ -291,16 +293,16 @@ class bonesClass {
                     //console.log(`bone ${bone.boneStr} owned by ${bone.owner} part of trick ${bone.trick}`)
                     this.faceup[bone.boneStr] = true
                     if (bone.owner == moon.socket.id) {
-                        $('#tile' + bone.boneStr).css("left", x2 + (bone.trick-1)*110)
-                        $('#tile' + bone.boneStr).css("top", y2[bone.trick-1])
-                        y2[bone.trick-1] += 60
+                        $('#tile' + bone.boneStr).css("left", x2 + (bone.trick-1)*dw)
+                        $('#tile' + bone.boneStr).css("bottom", y2[bone.trick-1])
+                        y2[bone.trick-1] -= dh
                         moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
                     }
     
                     else {
-                        $('#tile' + bone.boneStr).css("left", x2 + (bone.trick-1)*110)
-                        $('#tile' + bone.boneStr).css("top", y2[bone.trick-1] + 40)
-                        y2[bone.trick-1] += 60
+                        $('#tile' + bone.boneStr).css("left", x2 + (bone.trick-1)*dw)
+                        $('#tile' + bone.boneStr).css("bottom", y2[bone.trick-1] - 40)
+                        y2[bone.trick-1] -= dh
                         moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
     //                        if (ty[bone.owner] == undefined) {
     //                            tx[bone.owner] = (bone.trick-1)*100
@@ -345,15 +347,15 @@ class bonesClass {
      //                   else {
                     if (bone.kitty) {
                         $('#tile' + bone.boneStr).css("left",xkitty)
-                        $('#tile' + bone.boneStr).css("top",ykitty)
+                        $('#tile' + bone.boneStr).css("bottom",ykitty)
                     }
                     else {
                         $('#tile' + bone.boneStr).css("left",x)
-                        $('#tile' + bone.boneStr).css("top",y)
-                        x += 110
-                        if ((y == yhand) && (x > xhand + 2*110)) {
-                            x = xhand - 60
-                            y += 60
+                        $('#tile' + bone.boneStr).css("bottom",y)
+                        x += dw
+                        if ((y == yhand) && (x > xhand + 2*dw)) {
+                            x = xhand - dh
+                            y -= dh
                         }
                     }
                     $('#tile' + bone.boneStr).show()
@@ -371,14 +373,14 @@ class bonesClass {
                 if (bone.discarded) {
                     $('#btnBone' + i).show()
                     $('#btnBone' + i).prop("disabled",true)
-                    $('#btnBone' + i).css("left", 700)
-                    $('#btnBone' + i).css("top", 400)   
+                    $('#btnBone' + i).css("left", 600)
+                    $('#btnBone' + i).css("bottom", 300)   
                 }
                 else {
                     $('#btnBone' + i).show()
                     $('#btnBone' + i).prop("disabled",!enabled)
                     $('#btnBone' + i).css("left", this.x[i])
-                    $('#btnBone' + i).css("top", this.y[i])
+                    $('#btnBone' + i).css("bottom", this.y[i])
                 }
             }
         }
