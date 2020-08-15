@@ -10,8 +10,8 @@ FAST Feature: Timeout for MOON
 //.+fast
 /* ----- trick so emacs ignores this section -----
 //.-fast
-button#btnTimeout(class="w3-button w3-blue w3-hover-white w3-text-black w3-card-4 w3-ripple w3-round-large" style='position:absolute; width:160px; height:50px; bottom:10px; right:10px;') <b>TIMEOUT:-</b>
-button#btnTimeoutRed(class="w3-button w3-red w3-hover-white w3-text-black w3-card-4 w3-ripple w3-round-large" style='position:absolute; width:200px; height:50px; bottom:10px; right:10px;') <b>TIMEOUT:-</b>
+button#btnTimeout(class="w3-button w3-blue w3-hover-white w3-text-black w3-card-4 w3-ripple w3-round-xlarge" style='position:absolute; width:170px; height:50px; bottom:10px; right:10px;') <b>TIMEOUT:-</b>
+button#btnTimeoutRed(class="w3-button w3-red w3-hover-white w3-text-black w3-card-4 w3-ripple w3-round-xlarge" style='position:absolute; width:170px; height:50px; bottom:10px; right:10px;') <b>TIMEOUT:-</b>
 //.+fast
 -- -----------------------------------------------
 */
