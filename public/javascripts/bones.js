@@ -252,8 +252,8 @@ class bonesClass {
         for (let k in this.faceup) {
             this.faceup[k] = false
         }
-    	let dh = 50
-    	let dw = 100
+    	let dh = 48
+    	let dw = 96
     	let xhand = 70
     	let yhand = 140
         let xkitty = xhand + dw

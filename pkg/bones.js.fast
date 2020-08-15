@@ -58,7 +58,7 @@ button#btnBone@i@(class="w3-button w3-white w3-hover-green w3-text-black w3-card
 img#tile@bones.bonepool[i]@(src="images/@bones.bonepool[i]@.jpg" class="w3-button" style="position:absolute; width:110px; height:55px; bottom:@y[i]@px; left:@x[i]@px;")
 //.  }
 //.### removed w3-animate-fading
-h1#message(class="w3-center w3-card-4 w3-yellow w3-text-black w3-round-xxlarge" style='position:absolute; bottom:10px; left:10px; width:450px;') <b>Welcome to MOON</b>
+h1#message(class="w3-center w3-card-4 w3-yellow w3-text-black w3-round-xxlarge" style='position:absolute; bottom:10px; left:10px; width:420px;') <b>Welcome to MOON</b>
 table#stats(class="w3-center w3-card-4 w3-light-blue w3-text-black w3-round-xxlarge" style='position:absolute; top:20px; right:40px; width:700px') <tr><th>Name</th><th>Wins</th><th>Score</th><th>Tricks</th></tr>
 h2#bid(class="w3-center w3-card-4 w3-light-blue w3-text-black w3-round-xlarge" style='position:absolute; bottom:180px; right:10px; width:200px') <b> BID: - </b> 
 h2#trump(class="w3-center w3-card-4 w3-light-blue w3-text-black w3-round-xlarge" style='position:absolute; bottom:120px; right:10px; width:200px') <b> TRUMP: - </b> 
@@ -355,8 +355,8 @@ class bonesClass {
         for (let k in this.faceup) {
             this.faceup[k] = false
         }
-	let dh = 50
-	let dw = 100
+	let dh = 48
+	let dw = 96
 	let xhand = 70
 	let yhand = 140
         let xkitty = xhand + dw
