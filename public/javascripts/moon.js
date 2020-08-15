@@ -609,8 +609,14 @@ class moonClass {
         s += '<th>' + 'Score' + '</th>'
         s += '<th>' + 'Tricks' + '</th>'
         s += '</tr>'
-        let socketId
-        for (socketId of stats.socketIds) {
+        let socketIds = stats.socketIds.sort(function(a,b) {
+     var pa = stats[a].name
+     var pb = stats[b].name
+     if (pa < pb) return -1
+     if (pa > pb) return 1
+     return 0
+    	})
+        for (let socketId of socketIds) {
             let ps = stats[socketId]
             s += '<tr>'
             s += '<td>' + moon.limit(ps.name, 10)   + '</td>'
