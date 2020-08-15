@@ -255,7 +255,7 @@ class bonesClass {
     	let dh = 48
     	let dw = 96
     	let xhand = 70
-    	let yhand = 140
+    	let yhand = 200
         let xkitty = xhand + dw
         let ykitty = yhand + dh
         let x1 = xhand
