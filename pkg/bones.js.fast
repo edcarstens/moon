@@ -357,8 +357,8 @@ class bonesClass {
         }
 	let dh = 48
 	let dw = 96
-	let xhand = 70
-	let yhand = 200
+	let xhand = 60
+	let yhand = 250
         let xkitty = xhand + dw
         let ykitty = yhand + dh
         let x1 = xhand
@@ -435,7 +435,7 @@ class bonesClass {
                 if (bone.discarded) {
                     $('#btnBone' + i).show()
                     $('#btnBone' + i).prop("disabled",true)
-                    $('#btnBone' + i).css("left", 600)
+                    $('#btnBone' + i).css("left", 500)
                     $('#btnBone' + i).css("bottom", 300)   
                 }
                 else {
