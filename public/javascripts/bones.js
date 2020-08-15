@@ -254,24 +254,17 @@ class bonesClass {
         }
     	let dh = 50
     	let dw = 100
+    	let xhand = 70
     	let yhand = 140
-    	let xhand = 120
         let xkitty = xhand + dw
         let ykitty = yhand + dh
-        let x = xhand
-        let y = yhand
+        let x1 = xhand
+        let y1 = yhand
         let x2 = 0 // showing tricks played in the past
         let y2 = [560,560,560,560,560,560,560]
+     	let x3 = 420
         let y3 = 510-3*dh // showing dominos played for current trick
-    	let x3 = 420
-        // x4,y4 - location of opponents' tricks won (unused)
-        let x4 = 0
-        let y4 = [340,340,340,340,340,340,340]
-        // x,y positions for bones in tricks
-        let tx = {}
-        let ty = {}
-        let ty0 = 160 + 20
-        for (let i=0; i<this.pool.length; i++) {
+    	for (let i=0; i<this.pool.length; i++) {
             let bone = this.pool[i]
             if (bone.faceup) {
                 $('#btnBone' + i).hide()
@@ -304,58 +297,24 @@ class bonesClass {
                         $('#tile' + bone.boneStr).css("bottom", y2[bone.trick-1] - 40)
                         y2[bone.trick-1] -= dh
                         moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
-    //                        if (ty[bone.owner] == undefined) {
-    //                            tx[bone.owner] = (bone.trick-1)*100
-    //                            ty[bone.owner] = {}
-    //                            ty[bone.owner][bone.trick-1] = ty0
-    //                            //ty0 += 20
-    //                        }
-    //                        else {
-    //                            ty[bone.owner][bone.trick-1] += 60
-    //                            tx[bone.owner] = (bone.trick-1)*100
-    //                        }
-    //                        $('#tile' + bone.boneStr).css("left", tx[bone.owner])
-    //                        $('#tile' + bone.boneStr).css("top",  ty[bone.owner][bone.trick-1])
-    //                        moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
                     }
-    
-                    //if (bone.owner == moon.socket.id) {
-                    //    $('#tile' + bone.boneStr).css("left",x2 + (bone.trick-1)*100)
-                    //    $('#tile' + bone.boneStr).css("top",y2[bone.trick-1])
-                    //    y2[bone.trick-1] += 60
-                    //    moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
-                    //}
-                    //else {
-                    //    $('#tile' + bone.boneStr).css("left",x4)
-                    //    x4 += 100
-                    //    $('#tile' + bone.boneStr).css("top",y4[bone.trick-1])
-                    //    y4[bone.trick-1] += 60
-                    //    moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
-                    //}
                 }
                 else if (bone.owner == moon.socket.id) {
                     //console.log(`${bone.boneStr} matches owner`)
                     //console.log(bone.owner)
                     //console.log(moon.socket.id)
                     this.faceup[bone.boneStr] = true
-     //                   if (bone.trick) {
-     //                       $('#tile' + bone.boneStr).css("left",x2 + (bone.trick-1)*100)
-     //                       $('#tile' + bone.boneStr).css("top",y2[bone.trick-1])
-     //                       y2[bone.trick-1] += 60
-     //                       moon.clickBoneId[bone.boneStr] = -2 // signals illegal play
-     //                   }
-     //                   else {
                     if (bone.kitty) {
                         $('#tile' + bone.boneStr).css("left",xkitty)
                         $('#tile' + bone.boneStr).css("bottom",ykitty)
                     }
                     else {
-                        $('#tile' + bone.boneStr).css("left",x)
-                        $('#tile' + bone.boneStr).css("bottom",y)
-                        x += dw
-                        if ((y == yhand) && (x > xhand + 2*dw)) {
-                            x = xhand - dh
-                            y -= dh
+                        $('#tile' + bone.boneStr).css("left",x1)
+                        $('#tile' + bone.boneStr).css("bottom",y1)
+                        x1 += dw
+                        if ((y1 == yhand) && (x1 > xhand + 2*dw)) {
+                            x1 = xhand - dw/2
+                            y1 -= dh
                         }
                     }
                     $('#tile' + bone.boneStr).show()
