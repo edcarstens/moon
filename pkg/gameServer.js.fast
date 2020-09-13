@@ -26,15 +26,6 @@ class gameServerClass {
     }
     //.-this.c
 
-    //.+this.start()
-    (
-    ) {
-        let io = this.io;
-        console.log('moon game server starting..');
-        // Never use 'this' keyword in callbacks
-    }
-    //.-this.start
-
     //.+this.emitUntilAckOrTimeout()
     a(
         player,

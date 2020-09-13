@@ -27,13 +27,6 @@ class gameServerClass {
             this.call = 'Follow Me'
     }
 
-    start(
-    ) {
-        let io = this.io;
-        console.log('moon game server starting..');
-        // Never use 'this' keyword in callbacks
-    }
-
     async emitUntilAckOrTimeout(
         player,
         data
